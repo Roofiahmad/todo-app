@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
-import ModalDelete from "../components/ModalDelete";
 
 import { ReactComponent as AddIcon } from "../assets/add.svg";
 import { ReactComponent as TrashIcon } from "../assets/trash.svg";
 import emptyActivityImage from "../assets/activity-empty-state.png";
 import "./Home.scss";
-import Alert from "../components/Alert";
+
+const Alert = lazy(() => import("../components/Alert"));
+const ModalDelete = lazy(() => import("../components/ModalDelete"));
 
 const url = "https://todo.api.devcode.gethired.id/activity-groups";
 
@@ -123,7 +123,7 @@ export default function Home() {
         </div>
         {!listItem.length && !loadingPage ? (
           <div className="container">
-            <img src={emptyActivityImage} alt="empty activity" className="img-fluid" data-cy="activity-empty-state" />
+            <img loading="lazy" src={emptyActivityImage} alt="empty activity" className="img-fluid" data-cy="activity-empty-state" />
           </div>
         ) : (
           <div className="container mt-4">

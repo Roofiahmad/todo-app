@@ -66,6 +66,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   const postNewItem = () => {
+    if (title.trim() === "") return;
     setIsloading(true);
     axios
       .post(url + "/", {
@@ -87,6 +88,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   const postEditItem = () => {
+    if (title.trim() === "") return;
     setIsloading(true);
     axios
       .patch(url + "/" + item.id, {
@@ -116,8 +118,6 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
     const oldTitle = item.title;
     setTitle(oldTitle);
   }, [item]);
-
-  const TextOption = (props) => components.Option && <components.Option {...props}></components.Option>;
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;

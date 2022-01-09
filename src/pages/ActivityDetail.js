@@ -1,6 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, lazy } from "react";
 import { Link, useParams } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 import axios from "axios";
+
 import { ReactComponent as AddIcon } from "../assets/add.svg";
 import { ReactComponent as BackIcon } from "../assets/chevron-left.svg";
 import { ReactComponent as EditIcon } from "../assets/edit.svg";
@@ -12,15 +14,13 @@ import { ReactComponent as OldestIcon } from "../assets/oldest.svg";
 import { ReactComponent as UnfinishIcon } from "../assets/unfinish-sort.svg";
 import { ReactComponent as CheckIcon } from "../assets/sort-applied.svg";
 
-import { Dropdown } from "react-bootstrap";
-
 import emptyListImage from "../assets/empty-list.png";
-
 import "./ActivityDetail.scss";
-import ModalCreateList from "../components/ModalCreateList";
-import ItemList from "../components/ItemList";
-import ModalDelete from "../components/ModalDelete";
-import Alert from "../components/Alert";
+
+const ModalCreateList = lazy(() => import("../components/ModalCreateList"));
+const ItemList = lazy(() => import("../components/ItemList"));
+const Alert = lazy(() => import("../components/Alert"));
+const ModalDelete = lazy(() => import("../components/ModalDelete"));
 
 const url = "https://todo.api.devcode.gethired.id/activity-groups";
 
@@ -301,7 +301,7 @@ export default function ActivityDetail() {
         </div>
       ) : (
         <div className="image-container">
-          <img src={emptyListImage} alt="empty activity" className=" img-fluid" data-cy="todo-empty-state" />
+          <img loading="lazy" src={emptyListImage} alt="empty activity" className=" img-fluid" data-cy="todo-empty-state" />
         </div>
       )}
 

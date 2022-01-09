@@ -1,8 +1,9 @@
 import * as React from "react";
+import { lazy } from "react";
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import ActivityDetail from "./pages/ActivityDetail";
+const Home = lazy(() => import("./pages/Home"));
+const ActivityDetail = lazy(() => import("./pages/ActivityDetail"));
 
 function App() {
   return (
@@ -13,8 +14,22 @@ function App() {
         </h1>
       </header>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<ActivityDetail />} />
+        <Route
+          path="/"
+          element={
+            <React.Suspense fallback={<>...</>}>
+              <Home />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="/detail/:id"
+          element={
+            <React.Suspense fallback={<>...</>}>
+              <ActivityDetail />
+            </React.Suspense>
+          }
+        />
       </Routes>
     </div>
   );
