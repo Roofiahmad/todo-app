@@ -38,7 +38,6 @@ export default function ActivityDetail() {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [inputTitle, setInputTitle] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [debounce, setDebounce] = useState(null);
 
   const listFilter = [
     { icon: <NewestIcon />, text: "Terbaru", key: "newest" },
@@ -235,12 +234,12 @@ export default function ActivityDetail() {
               />
             </form>
           ) : (
-            <h1 className="todo-title" data-cy="todo-title">
+            <h1 onClick={handleFocus} className="todo-title " data-cy="todo-title">
               {inputTitle}
             </h1>
           )}
-          <button ref={editIcon} onClick={handleFocus} className="btn todo-title-edit-button mb-auto mx-4" data-cy="todo-title-edit-button">
-            <EditIcon className="todo-title-edit-button-icon" />
+          <button className="btn todo-title-edit-button mb-auto mx-4" data-cy="todo-title-edit-button">
+            <EditIcon ref={editIcon} className="todo-title-edit-button-icon" />
           </button>
         </div>
         <div className="d-flex ">
