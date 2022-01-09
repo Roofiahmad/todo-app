@@ -36,7 +36,7 @@ export default function ActivityDetail() {
   const [modalListMode, setModalListMode] = useState("");
   const [appliedFilter, setAppliedFilter] = useState("newest");
   const [loadingDelete, setLoadingDelete] = useState(false);
-  const [inputTitle, setInputTitle] = useState("_");
+  const [inputTitle, setInputTitle] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [debounce, setDebounce] = useState(null);
 
@@ -80,11 +80,12 @@ export default function ActivityDetail() {
     searchInput.current.focus();
   }
   const changeHandler = (evt) => {
+    if (evt.target.value.trim() === "") return;
     setInputTitle(evt.target.value);
   };
 
   useEffect(() => {
-    if (activity.title !== inputTitle && inputTitle !== "_") {
+    if (activity.title !== inputTitle && inputTitle !== "") {
       if (debounce) {
         clearTimeout(debounce);
       }
@@ -98,6 +99,10 @@ export default function ActivityDetail() {
       clearTimeout(debounce);
     };
   }, [inputTitle]);
+
+  useEffect(() => {
+    getActivityDetail();
+  }, []);
 
   // const handleOutside = (evt) => {
   //   const isEdited = editIcon.current.contains(evt.target);
@@ -216,10 +221,6 @@ export default function ActivityDetail() {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    getActivityDetail();
-  }, []);
 
   return (
     <div className="activity-detail">
