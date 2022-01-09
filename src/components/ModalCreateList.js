@@ -51,9 +51,9 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   const handleTitleInput = (event) => {
-    const title = event.target.value;
-    setTitle(title);
-    if (title.trim() !== "") {
+    const newTitle = event.target.value;
+    setTitle(newTitle);
+    if (newTitle.trim() !== "" && title !== undefined) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -161,7 +161,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
       </Modal.Body>
       <Modal.Footer>
         <Button
-          // disabled={isDisabled}
+          disabled={isDisabled}
           className="modal-add-save-button"
           data-cy="modal-add-save-button"
           variant="primary"
