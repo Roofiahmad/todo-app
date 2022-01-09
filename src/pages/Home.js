@@ -141,13 +141,8 @@ export default function Home() {
                         <p className="card-text activity-item-date" data-cy="activity-item-date">
                           {item.formatted_created_at}
                         </p>
-                        <span>
-                          <TrashIcon
-                            onClick={() => handleDeleteActivity(item.id)}
-                            className="delete-icon activity-item-delete-button"
-                            role="button"
-                            data-cy="activity-item-delete-button"
-                          />
+                        <span data-cy="activity-item-delete-button" onClick={() => handleDeleteActivity(item.id)}>
+                          <TrashIcon className="delete-icon activity-item-delete-button" role="button" data-cy="activity-item-delete-button" />
                         </span>
                       </div>
                     </div>
