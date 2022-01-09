@@ -148,14 +148,14 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         </label>
         <Select
           className="modal-add-priority-dropdown"
-          data-cy="modal-add-priority-dropdown"
           defaultValue={mode === "edit" ? oldItemPriority(item) : options[0]}
           options={options}
           styles={colourStyles}
           onChange={handlePriorityInput}
           components={{
             IndicatorSeparator: () => null,
-            Option: addDataAcceptance(TextOption, "modal-add-priority-item"),
+            Option: addDataAcceptance(components.Option, "modal-add-priority-item"),
+            Control: addDataAcceptance(components.Control, "modal-add-priority-dropdown"),
           }}
         />
       </Modal.Body>
