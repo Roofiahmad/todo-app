@@ -1,0 +1,35 @@
+@import "../styles/variables.scss";
+
+.alert-container {
+  .modal-content {
+    // border: 1px solid red;
+    width: 490px !important;
+    height: 58px !important;
+  }
+
+  .modal-content {
+    padding: 0 !important;
+  }
+  .alert {
+    width: 490px;
+    height: 58px;
+    display: flex;
+    background-color: $color-white;
+    // transform: translatex(-50%);
+    border-radius: 12px;
+
+    .modal-information {
+      &-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 1rem;
+      }
+
+      &-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: $color-black;
+      }
+    }
+  }
+}

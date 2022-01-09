@@ -1,0 +1,132 @@
+@import "../styles/variables.scss";
+
+.activity-detail {
+  padding: 0 15%;
+
+  @media screen and (max-width: 370px) {
+    padding: 0 5%;
+  }
+
+  .navigation {
+    display: flex;
+    .todo-back-button,
+    button {
+      width: 16px;
+      height: auto;
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    .todo-title {
+      padding: 0;
+      margin: 0;
+      border-radius: 0px;
+      box-shadow: none;
+      font-size: 36px;
+      font-weight: 700;
+      text-align: left;
+      &:focus {
+        width: 50vw;
+        border-bottom: 1px solid $color-black;
+      }
+    }
+
+    .todo-title-edit-button {
+      border: none;
+      box-shadow: none;
+
+      &-icon {
+        width: 15px;
+        height: auto;
+      }
+    }
+  }
+  .todo-add-button {
+    padding: 0;
+    width: 160px;
+    height: 54px;
+    color: $color-white;
+    border-radius: 45px;
+
+    &:active,
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+
+    @media screen and (max-width: 370px) {
+      padding: 0;
+      width: 120px;
+      height: 35px;
+    }
+    .icon {
+      @media screen and (max-width: 370px) {
+        height: 0.7rem;
+        width: auto;
+      }
+    }
+    .label {
+      font-size: 1.125rem;
+      font-weight: 600;
+      @media screen and (max-width: 370px) {
+        font-size: 0.92rem;
+      }
+    }
+  }
+
+  .dropdown-toggle {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent;
+      box-shadow: none;
+    }
+    &:after {
+      display: none !important;
+    }
+  }
+
+  .todo-sort-button {
+    .arrow-sort {
+      width: 1.5rem;
+    }
+  }
+
+  .sort-parent {
+    padding: 0;
+    .sort-selection {
+      width: 235px;
+      height: 52px;
+      background-color: $color-white;
+      border-bottom: 1px solid $color-black-2;
+      padding: 0;
+
+      &:hover {
+        background-color: lighten($color: $color-black-2, $amount: 2);
+      }
+
+      &-icon > * {
+        width: 24px;
+        height: auto;
+        margin: 0 1rem;
+      }
+
+      &-title {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5rem;
+        color: #4a4a4a;
+      }
+    }
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

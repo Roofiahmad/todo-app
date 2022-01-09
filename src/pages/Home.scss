@@ -1,0 +1,87 @@
+@import "../styles/variables.scss";
+
+.Home {
+  padding: 0 15%;
+
+  @media screen and (max-width: 370px) {
+    padding: 0 5%;
+  }
+
+  .title-container {
+    .activity-title {
+      color: $color-black;
+      @media screen and (max-width: 370px) {
+        font-size: 1.23rem;
+      }
+    }
+    .activity-add-button {
+      padding: 0;
+      width: 160px;
+      height: 54px;
+      color: $color-white;
+      border-radius: 45px;
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      @media screen and (max-width: 370px) {
+        padding: 0;
+        width: 120px;
+        height: 35px;
+      }
+      .icon {
+        @media screen and (max-width: 370px) {
+          height: 0.7rem;
+          width: auto;
+        }
+      }
+      .label {
+        font-size: 1.125rem;
+        font-weight: 600;
+        @media screen and (max-width: 370px) {
+          font-size: 0.92rem;
+        }
+      }
+    }
+  }
+
+  .activity-item {
+    width: 16.4vw;
+    height: 16.4vw;
+    border-radius: 12px;
+
+    @media screen and (max-width: 370px) {
+      width: 42.7vw;
+      height: 42.7vw;
+      border-radius: 12px;
+    }
+
+    &-title {
+      width: 100%;
+      font-weight: 700;
+      font-size: 1.125rem;
+      line-height: 1.6875rem;
+      color: $color-black;
+      @media screen and (max-width: 370px) {
+        font-size: 0.9rem;
+      }
+    }
+
+    &-date {
+      color: $color-gray;
+      font-size: 0.875rem;
+      @media screen and (max-width: 370px) {
+        font-size: 0.9rem;
+      }
+    }
+
+    &-delete-button {
+      width: 1rem;
+      height: auto;
+      @media screen and (max-width: 370px) {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

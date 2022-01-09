@@ -1,0 +1,56 @@
+@import "../styles/variables.scss";
+
+.todo-item {
+  height: 80px;
+  background-color: $color-white;
+  border-radius: 12px;
+
+  &-checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: $color-white;
+
+    &:focus {
+      box-shadow: none;
+    }
+    &:active {
+      background-color: transparent;
+    }
+  }
+
+  &-priority-indicator {
+    border-radius: 10px;
+    margin: 0 1rem;
+    height: 10px;
+    width: 10px;
+  }
+
+  .unactive {
+    text-decoration: line-through;
+    color: $color-gray;
+  }
+
+  &-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    color: $color-black;
+    margin-right: 1rem;
+  }
+
+  &-edit-button {
+    &-icon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  &-delete-button {
+    margin-left: auto;
+    &-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
