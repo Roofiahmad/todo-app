@@ -77,8 +77,12 @@ export default function ActivityDetail() {
 
   function handleFocus() {
     setEditMode(true);
-    searchInput.current.focus();
   }
+
+  useEffect(() => {
+    if (editMode) searchInput.current.focus();
+  }, [editMode]);
+
   const changeHandler = (evt) => {
     if (evt.target.value.trim() === "") return;
     setInputTitle(evt.target.value);
@@ -231,15 +235,21 @@ export default function ActivityDetail() {
               <BackIcon className="todo-back-icon" />
             </button>
           </Link>
-          <input
-            style={{ width: editMode ? "100%" : inputTitle.length + 1 + "ch" }}
-            onChange={changeHandler}
-            ref={searchInput}
-            value={inputTitle}
-            type="text"
-            className="btn todo-title"
-            data-cy="todo-title"
-          />
+          {editMode ? (
+            <input
+              style={{ width: editMode ? "100%" : inputTitle.length + 1 + "ch" }}
+              onChange={changeHandler}
+              ref={searchInput}
+              value={inputTitle}
+              type="text"
+              className="btn todo-title"
+              data-cy="todo-title"
+            />
+          ) : (
+            <h1 className="todo-title" data-cy="todo-title">
+              {inputTitle}
+            </h1>
+          )}
           <button ref={editIcon} onClick={handleFocus} className="btn todo-title-edit-button mb-auto mx-4" data-cy="todo-title-edit-button">
             <EditIcon className="todo-title-edit-button-icon" />
           </button>
