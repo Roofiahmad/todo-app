@@ -148,7 +148,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button className="modal-add-save-button" data-cy="modal-add-save-button" variant="primary" onClick={() => onSaveData()}>
+        <Button disabled={!title} className="modal-add-save-button" data-cy="modal-add-save-button" variant="primary" onClick={() => onSaveData()}>
           {isLoading ? (
             <div class="spinner-border text-light" role="status">
               <span class="visually-hidden"></span>

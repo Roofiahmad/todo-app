@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import "./App.scss";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -10,7 +9,7 @@ function App() {
     <div className="App">
       <header className="bg-primary header-background" data-cy="header-background">
         <h1 data-cy="header-title" className="header-title">
-          to do list app
+          TO DO LIST APP
         </h1>
       </header>
       <Routes>
