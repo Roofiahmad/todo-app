@@ -91,7 +91,7 @@ export default function ActivityDetail() {
       setDebounce(
         setTimeout(() => {
           postUpdateActivity();
-        }, 2000)
+        }, 100)
       );
     }
     return () => {
