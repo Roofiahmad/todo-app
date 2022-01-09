@@ -84,25 +84,14 @@ export default function ActivityDetail() {
   }, [editMode]);
 
   const changeHandler = (evt) => {
-    if (evt.target.value.trim() === "") return;
     setInputTitle(evt.target.value);
   };
 
   useEffect(() => {
-    if (activity.title !== inputTitle && inputTitle !== "") {
-      if (debounce) {
-        clearTimeout(debounce);
-      }
-      setDebounce(
-        setTimeout(() => {
-          postUpdateActivity();
-        }, 100)
-      );
+    if (!editMode && activity.title !== inputTitle && inputTitle !== "") {
+      postUpdateActivity();
     }
-    return () => {
-      clearTimeout(debounce);
-    };
-  }, [inputTitle]);
+  }, [editMode]);
 
   useEffect(() => {
     getActivityDetail();
@@ -122,13 +111,14 @@ export default function ActivityDetail() {
   // implement outside click
   useOutsideAlerter(editIcon);
 
+  function handleClickOutside(event) {
+    if (editIcon.current && !editIcon.current.contains(event.target)) {
+      setEditMode(false);
+    }
+  }
+
   function useOutsideAlerter(ref) {
     useEffect(() => {
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setEditMode(false);
-        }
-      }
       document.addEventListener("mousedown", handleClickOutside);
       return () => {
         document.removeEventListener("mousedown", handleClickOutside);
