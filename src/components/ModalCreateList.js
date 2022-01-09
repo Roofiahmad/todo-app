@@ -14,6 +14,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState({});
   const [isLoading, setIsloading] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const options = [
     { value: "very-high", label: "Very High", color: "#ED4C5C" },
@@ -52,6 +53,11 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   const handleTitleInput = (event) => {
     const title = event.target.value;
     setTitle(title);
+    if (title.trim() !== "") {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
   };
 
   const onSaveData = () => {
@@ -114,7 +120,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   const TextOption = (props) => components.Option && <components.Option {...props}></components.Option>;
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
-    <Component {...props} innerProps={Object.assign({}, props.innerProps, { " data-cy": dataAcceptance })} />;
+    <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
 
   return (
     <Modal show={isModalListShow} onHide={handleModalListClose} data-cy="modal-add" dialogClassName="modal-add">
@@ -154,7 +160,13 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button disabled={!title} className="modal-add-save-button" data-cy="modal-add-save-button" variant="primary" onClick={() => onSaveData()}>
+        <Button
+          disabled={isDisabled}
+          className="modal-add-save-button"
+          data-cy="modal-add-save-button"
+          variant="primary"
+          onClick={() => onSaveData()}
+        >
           {isLoading ? (
             <div class="spinner-border text-light" role="status">
               <span class="visually-hidden"></span>
