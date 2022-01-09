@@ -20,6 +20,7 @@ import "./ActivityDetail.scss";
 import ModalCreateList from "../components/ModalCreateList";
 import ItemList from "../components/ItemList";
 import ModalDelete from "../components/ModalDelete";
+import Alert from "../components/Alert";
 
 const url = "https://todo.api.devcode.gethired.id/activity-groups";
 
@@ -36,6 +37,7 @@ export default function ActivityDetail() {
   const [appliedFilter, setAppliedFilter] = useState("newest");
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [inputTitle, setInputTitle] = useState("_");
+  const [showAlert, setShowAlert] = useState(false);
   const [debounce, setDebounce] = useState(null);
 
   const listFilter = [
@@ -193,6 +195,7 @@ export default function ActivityDetail() {
       .then((response) => {
         getActivityDetail();
         setLoadingDelete(false);
+        setShowAlert(true);
       })
       .catch((err) => {
         setLoadingDelete(false);
@@ -311,6 +314,7 @@ export default function ActivityDetail() {
         deleteList={deleteList}
         loadingDelete={loadingDelete}
       />
+      <Alert title={"List Item"} showAlert={showAlert} setShowAlert={setShowAlert} />
     </div>
   );
 }
