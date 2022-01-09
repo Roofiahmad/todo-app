@@ -79,6 +79,14 @@ export default function ActivityDetail() {
     setEditMode(true);
   }
 
+  function onSubmitForm(e) {
+    e.preventDefault();
+
+    if (editMode && activity.title !== inputTitle && inputTitle !== "") {
+      postUpdateActivity();
+    }
+  }
+
   useEffect(() => {
     if (editMode) searchInput.current.focus();
   }, [editMode]);
@@ -96,17 +104,6 @@ export default function ActivityDetail() {
   useEffect(() => {
     getActivityDetail();
   }, []);
-
-  // const handleOutside = (evt) => {
-  //   const isEdited = editIcon.current.contains(evt.target);
-  //   console.log(inputTitle);
-  //   if (!isEdited) {
-  //     setEditMode(false);
-  //     if (activity.title !== inputTitle) {
-  //       postUpdateActivity();
-  //     }
-  //   }
-  // };
 
   // implement outside click
   useOutsideAlerter(editIcon);
@@ -226,15 +223,17 @@ export default function ActivityDetail() {
             </button>
           </Link>
           {editMode ? (
-            <input
-              style={{ width: editMode ? "100%" : inputTitle.length + 1 + "ch" }}
-              onChange={changeHandler}
-              ref={searchInput}
-              value={inputTitle}
-              type="text"
-              className="btn todo-title"
-              data-cy="todo-title"
-            />
+            <form onSubmit={(e) => onSubmitForm(e)}>
+              <input
+                style={{ width: editMode ? "100%" : inputTitle.length + 1 + "ch" }}
+                onChange={changeHandler}
+                ref={searchInput}
+                value={inputTitle}
+                type="text"
+                className="btn todo-title"
+                data-cy="todo-title"
+              />
+            </form>
           ) : (
             <h1 className="todo-title" data-cy="todo-title">
               {inputTitle}
