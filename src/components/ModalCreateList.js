@@ -11,7 +11,7 @@ const url = "https://todo.api.devcode.gethired.id/todo-items";
 
 export default function ModalCreateList({ mode = "", item = {}, isModalListShow, handleModalListClose }) {
   const { id: activityId } = useParams();
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(" ");
   const [priority, setPriority] = useState({});
   const [isLoading, setIsloading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -61,12 +61,13 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   const onSaveData = () => {
+    if (title === undefined || title.trim() === "") return console.log("field cant be empty");
+    console.log("below return");
     if (mode === "edit") return postEditItem();
     return postNewItem();
   };
 
   const postNewItem = () => {
-    if (title.trim() === "") return;
     setIsloading(true);
     axios
       .post(url + "/", {
@@ -88,7 +89,6 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   const postEditItem = () => {
-    if (title.trim() === "") return;
     setIsloading(true);
     axios
       .patch(url + "/" + item.id, {
@@ -131,7 +131,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         <CloseIcon role="button" className="modal-add-close-button" onClick={handleModalListClose} data-cy="modal-add-close-button" />
       </Modal.Header>
       <Modal.Body className="d-flex flex-column">
-        <label className="modal-add-name-title" data-cy="modal-add-name-title" for="listname">
+        <label className="modal-add-name-title" data-cy="modal-add-name-title" htmlFor="listname">
           Nama List Item
         </label>
         <input
@@ -143,7 +143,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
           type="text"
           value={title}
         />
-        <label className="modal-add-priority-title" data-cy="modal-add-priority-title" for="priority">
+        <label className="modal-add-priority-title" data-cy="modal-add-priority-title" htmlFor="priority">
           Priority
         </label>
         <Select
@@ -161,7 +161,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
       </Modal.Body>
       <Modal.Footer>
         <Button
-          disabled={isDisabled}
+          // disabled={isDisabled}
           className="modal-add-save-button"
           data-cy="modal-add-save-button"
           variant="primary"
