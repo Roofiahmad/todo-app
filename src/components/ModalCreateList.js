@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import axios from "axios";
 
 import { ReactComponent as CloseIcon } from "../assets/close.svg";
@@ -111,6 +111,11 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
     setTitle(oldTitle);
   }, [item]);
 
+  const TextOption = (props) => components.Option && <components.Option {...props}></components.Option>;
+
+  const addDataAcceptance = (Component, dataAcceptance) => (props) =>
+    <Component {...props} innerProps={Object.assign({}, props.innerProps, { " data-cy": dataAcceptance })} />;
+
   return (
     <Modal show={isModalListShow} onHide={handleModalListClose} data-cy="modal-add" dialogClassName="modal-add">
       <Modal.Header>
@@ -144,6 +149,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
           onChange={handlePriorityInput}
           components={{
             IndicatorSeparator: () => null,
+            Option: addDataAcceptance(TextOption, "modal-add-priority-item"),
           }}
         />
       </Modal.Body>
