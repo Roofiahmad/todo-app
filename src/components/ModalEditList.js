@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import Select, { components } from "react-select";
-import axios from "axios";
 
 import { ReactComponent as CloseIcon } from "../assets/close.svg";
 import "./ModalCreate.scss";
