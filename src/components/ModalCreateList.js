@@ -53,16 +53,10 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   const handleTitleInput = (event) => {
     const newTitle = event.target.value;
     setTitle(newTitle);
-    if (newTitle.trim() !== "" && title !== undefined) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
   };
 
   const onSaveData = () => {
-    if (title === undefined || title.trim() === "") return console.log("field cant be empty");
-    console.log("below return");
+    if (!title) return console.log("field cant be empty");
     if (mode === "edit") return postEditItem();
     return postNewItem();
   };
@@ -80,6 +74,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         setTimeout(() => {
           setIsloading(false);
           handleModalListClose();
+          setTitle("");
         }, 300);
       })
       .catch((err) => {
@@ -115,9 +110,21 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   useEffect(() => {
-    const oldTitle = item.title;
-    setTitle(oldTitle);
+    if (item.title) {
+      const oldTitle = item.title;
+      setTitle(oldTitle);
+    }
   }, [item]);
+
+  useEffect(() => {
+    if (title.trim() !== "") {
+      if (isDisabled) {
+        setIsDisabled(false);
+      }
+    } else {
+      setIsDisabled(true);
+    }
+  }, [title]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
@@ -168,8 +175,8 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
           onClick={() => onSaveData()}
         >
           {isLoading ? (
-            <div class="spinner-border text-light" role="status">
-              <span class="visually-hidden"></span>
+            <div className="spinner-border text-light" role="status">
+              <span className="visually-hidden"></span>
             </div>
           ) : (
             "Simpan"

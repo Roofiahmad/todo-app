@@ -41,8 +41,8 @@ export default function ModalDelete({
           </Button>
           <Button className="modal-delete-confirm-button" data-cy="modal-delete-confirm-button" variant="danger" onClick={handleDeleteItem}>
             {loadingDelete ? (
-              <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden">Loading...</span>
+              <div className="spinner-border text-light" role="status">
+                <span className="visually-hidden">Loading...</span>
               </div>
             ) : (
               "Hapus"

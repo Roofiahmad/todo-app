@@ -300,7 +300,15 @@ export default function ActivityDetail() {
         </div>
       ) : (
         <div className="image-container">
-          <img loading="lazy" src={emptyListImage} alt="empty activity" className=" img-fluid" data-cy="todo-empty-state" />
+          <img
+            style={{ cursor: "pointer" }}
+            onClick={() => handleModalListShow("create", {})}
+            loading="lazy"
+            src={emptyListImage}
+            alt="empty activity"
+            className=" img-fluid"
+            data-cy="todo-empty-state"
+          />
         </div>
       )}
 

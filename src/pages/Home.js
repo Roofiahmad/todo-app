@@ -110,8 +110,8 @@ export default function Home() {
             data-cy="activity-add-button"
           >
             {lodingButton ? (
-              <div class="spinner-border text-light" role="status">
-                <span class="visually-hidden"></span>
+              <div className="spinner-border text-light" role="status">
+                <span className="visually-hidden"></span>
               </div>
             ) : (
               <>
@@ -123,7 +123,15 @@ export default function Home() {
         </div>
         {!listItem.length && !loadingPage ? (
           <div className="container">
-            <img loading="lazy" src={emptyActivityImage} alt="empty activity" className="img-fluid" data-cy="activity-empty-state" />
+            <img
+              style={{ cursor: "pointer" }}
+              onClick={handleCreateActivity}
+              loading="lazy"
+              src={emptyActivityImage}
+              alt="empty activity"
+              className="img-fluid"
+              data-cy="activity-empty-state"
+            />
           </div>
         ) : (
           <div className="container mt-4">
@@ -163,8 +171,8 @@ export default function Home() {
       </div>
       {loadingPage ? (
         <div className="d-flex justify-content-center">
-          <div class="spinner-border text-primary position-absolute top-50 start-50" role="status">
-            <span class="visually-hidden">Loading...</span>
+          <div className="spinner-border text-primary position-absolute top-50 start-50" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
         </div>
       ) : (
