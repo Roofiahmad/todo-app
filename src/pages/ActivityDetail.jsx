@@ -125,6 +125,10 @@ export default function ActivityDetail() {
     handleSelectedFilter(appliedFilter);
   }, [activity]);
 
+  useEffect(() => {
+    console.log(filteredList);
+  }, [filteredList]);
+
   function handleClickOutside(event) {
     if (editIcon.current && !editIcon.current.contains(event.target)) {
       setEditMode(false);
@@ -145,10 +149,22 @@ export default function ActivityDetail() {
         newFilteredList.sort((a, b) => b.id - a.id);
         break;
       case "ascending":
-        newFilteredList.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
+        newFilteredList.sort((a, b) =>
+          a.title.toLowerCase().charCodeAt(0) < b.title.toLowerCase().charCodeAt(0)
+            ? -1
+            : a.title.toLowerCase().charCodeAt(0) > b.title.toLowerCase().charCodeAt(0)
+            ? 1
+            : 0
+        );
         break;
       case "descending":
-        newFilteredList.sort((a, b) => (a.title < b.title ? 1 : a.title > b.title ? -1 : 0));
+        newFilteredList.sort((a, b) =>
+          a.title.toLowerCase().charCodeAt(0) < b.title.toLowerCase().charCodeAt(0)
+            ? 1
+            : a.title.toLowerCase().charCodeAt(0) > b.title.toLowerCase().charCodeAt(0)
+            ? -1
+            : 0
+        );
         break;
       case "unfinish":
         newFilteredList.sort((a, b) => b.is_active - a.is_active);
@@ -156,7 +172,7 @@ export default function ActivityDetail() {
       default:
         break;
     }
-
+    console.log(newFilteredList);
     setFilteredList(newFilteredList);
   };
 
@@ -299,7 +315,7 @@ export default function ActivityDetail() {
             data-cy="todo-add-button"
           >
             <AddIcon className="me-2 icon" />
-            <span className=" label">Tambah</span>
+            <span className="label">Tambah</span>
           </button>
         </div>
       </div>

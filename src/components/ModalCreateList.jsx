@@ -10,7 +10,7 @@ const url = "https://todo.api.devcode.gethired.id/todo-items";
 
 export default function ModalCreateList({ isModalCreateShow, handleModalCreateClose }) {
   const { id: activityId } = useParams();
-  const [title, setTitle] = useState(" ");
+  const [title, setTitle] = useState("");
   const [priority, setPriority] = useState({});
   const [isLoading, setIsloading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
