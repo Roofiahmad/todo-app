@@ -41,7 +41,6 @@ function useOutsideAlerter(ref, cb) {
 export default function ActivityDetail() {
   const { id: activityId } = useParams();
 
-  const searchInput = useRef(null);
   const editIcon = useRef(null);
   const [editMode, setEditMode] = useState(false);
   const [activity, setActivity] = useState({ todo_items: [] });
