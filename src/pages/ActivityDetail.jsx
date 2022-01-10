@@ -121,6 +121,10 @@ export default function ActivityDetail() {
     fetchingActivity();
   }, []);
 
+  useEffect(() => {
+    handleSelectedFilter(appliedFilter);
+  }, [activity]);
+
   function handleClickOutside(event) {
     if (editIcon.current && !editIcon.current.contains(event.target)) {
       setEditMode(false);
@@ -141,22 +145,10 @@ export default function ActivityDetail() {
         newFilteredList.sort((a, b) => b.id - a.id);
         break;
       case "ascending":
-        newFilteredList.sort((a, b) => {
-          let x = a.title.toLowerCase();
-          let y = b.title.toLowerCase();
-          if (x < y) return -1;
-          if (x > y) return 1;
-          return 0;
-        });
+        newFilteredList.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
         break;
       case "descending":
-        newFilteredList.sort((a, b) => {
-          let x = a.title.toLowerCase();
-          let y = b.title.toLowerCase();
-          if (x > y) return -1;
-          if (x < y) return 1;
-          return 0;
-        });
+        newFilteredList.sort((a, b) => (a.title < b.title ? 1 : a.title > b.title ? -1 : 0));
         break;
       case "unfinish":
         newFilteredList.sort((a, b) => b.is_active - a.is_active);
@@ -174,7 +166,6 @@ export default function ActivityDetail() {
       .then((data) => {
         setActivity(data);
         setInputTitle(data.title);
-        setFilteredList(data.todo_items);
       })
       .catch((err) => console.log(err));
   };
