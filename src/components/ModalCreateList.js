@@ -5,9 +5,17 @@ import Select, { components } from "react-select";
 import axios from "axios";
 
 import { ReactComponent as CloseIcon } from "../assets/close.svg";
+import ListOption from "./ListOption";
 import "./ModalCreate.scss";
 
 const url = "https://todo.api.devcode.gethired.id/todo-items";
+const priorityList = [
+  { id: 1, value: "very-high" },
+  { id: 2, value: "high" },
+  { id: 3, value: "normal" },
+  { id: 4, value: "low" },
+  { id: 5, value: "very-low" },
+];
 
 export default function ModalCreateList({ mode = "", item = {}, isModalListShow, handleModalListClose }) {
   const { id: activityId } = useParams();
@@ -47,7 +55,9 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   const handlePriorityInput = (selectedValue) => {
-    setPriority(selectedValue);
+    console.log(selectedValue);
+    const newPriorityInput = oldItemPriority({ priority: selectedValue });
+    setPriority(newPriorityInput);
   };
 
   const handleTitleInput = (event) => {
@@ -60,10 +70,12 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
 
   const onSaveData = (e) => {
     e.preventDefault();
-    const inputTitle = e.target["title"].value;
-    const inputOption = e.target[2].value;
+    console.log(priority);
+    console.log(e);
+    // const inputTitle = e.target["title"].value;
+    // const inputOption = e.target[2].value;
     if (!title || isEmptyObject(priority)) return console.log("field cant be empty");
-    if (!inputTitle || !inputOption) return console.log("field cant be empty");
+    // if (!inputTitle || !inputOption) return console.log("field cant be empty");
     if (mode === "edit") return postEditItem();
     return postNewItem();
   };
@@ -158,7 +170,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
           <input
             onChange={handleTitleInput}
             className="form-control modal-add-name-input"
-            placeholder="Tambahkan Nama List Item"
+            placeholder="Tambahkan nama list item"
             data-cy="modal-add-name-input"
             id="listname"
             type="text"
@@ -168,7 +180,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
           <label className="modal-add-priority-title" data-cy="modal-add-priority-title" htmlFor="priority">
             Priority
           </label>
-          <Select
+          {/* <Select
             name="priority"
             className="modal-add-priority-dropdown"
             defaultValue={mode === "edit" ? oldItemPriority(item) : options[0]}
@@ -180,7 +192,10 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
               Option: addDataAcceptance(components.Option, "modal-add-priority-item"),
               Control: addDataAcceptance(components.Control, "modal-add-priority-dropdown"),
             }}
-          />
+          /> */}
+          <div className="w-1/3">
+            <ListOption lists={priorityList} data={priority.value} onChange={handlePriorityInput} />
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button disabled={isDisabled} className="modal-add-save-button" data-cy="modal-add-save-button" variant="primary" type="submit">
