@@ -78,11 +78,11 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         _comment: "list of priority is : very-high, high, normal, low, very-low | defalut value is very-high",
       })
       .then(({ data }) => {
+        setTitle("");
+        setPriority(options[0]);
         setTimeout(() => {
           setIsloading(false);
           handleModalListClose();
-          setTitle("");
-          setPriority(options[0]);
         }, 300);
       })
       .catch((err) => {
@@ -101,6 +101,8 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         _comment: "list of priority is : very-high, high, normal, low, very-low | defalut value is very-high",
       })
       .then(({ data }) => {
+        setTitle("");
+        setPriority(options[0]);
         setTimeout(() => {
           setIsloading(false);
           handleModalListClose();
