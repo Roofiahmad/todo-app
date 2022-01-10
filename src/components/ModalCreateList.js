@@ -119,7 +119,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
       setPriority(oldItemPriority(item));
     } else {
       setTitle("");
-      setPriority({});
+      setPriority(options[0]);
     }
   }, [mode]);
 
@@ -162,7 +162,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         </label>
         <Select
           className="modal-add-priority-dropdown"
-          defaultValue={mode === "edit" ? oldItemPriority(item) : {}}
+          defaultValue={mode === "edit" ? oldItemPriority(item) : options[0]}
           options={options}
           styles={colourStyles}
           onChange={handlePriorityInput}
