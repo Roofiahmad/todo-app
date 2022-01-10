@@ -68,17 +68,23 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
 
   const postEditItem = () => {
     setIsloading(true);
-    axios
-      .patch(url + "/" + item.id, {
+    fetch(url + "/" + item.id, {
+      method: "PATCH",
+      body: JSON.stringify({
         title: title,
         activity_group_id: activityId,
         priority: priority.value,
         _comment: "list of priority is : very-high, high, normal, low, very-low | defalut value is very-high",
-      })
-      .then(({ data }) => {
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        handleClearValue();
         setTimeout(() => {
           setIsloading(false);
-          handleClearValue();
         }, 300);
       })
       .catch((err) => {

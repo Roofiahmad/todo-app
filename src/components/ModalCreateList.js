@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import Select, { components } from "react-select";
-import axios from "axios";
 
 import { ReactComponent as CloseIcon } from "../assets/close.svg";
 import "./ModalCreate.scss";
@@ -68,14 +67,20 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
 
   const postNewItem = () => {
     setIsloading(true);
-    axios
-      .post(url + "/", {
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
         title: title,
         activity_group_id: activityId,
         priority: priority.value,
         _comment: "list of priority is : very-high, high, normal, low, very-low | defalut value is very-high",
-      })
-      .then(({ data }) => {
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
         setTitle("");
         setPriority(options[0]);
         setTimeout(() => {

@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect, lazy } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import axios from "axios";
 
 import { ReactComponent as AddIcon } from "../assets/add.svg";
 import { ReactComponent as BackIcon } from "../assets/chevron-left.svg";
@@ -24,6 +23,15 @@ const ModalEditList = lazy(() => import("../components/ModalEditList"));
 const ModalDelete = lazy(() => import("../components/ModalDelete"));
 
 const url = "https://todo.api.devcode.gethired.id/activity-groups";
+
+function useOutsideAlerter(ref, handleClickOutside) {
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}
 
 export default function ActivityDetail() {
   const { id: activityId } = useParams();
@@ -113,23 +121,14 @@ export default function ActivityDetail() {
     fetchingActivity();
   }, []);
 
-  // implement outside click
-  useOutsideAlerter(editIcon);
-
   function handleClickOutside(event) {
     if (editIcon.current && !editIcon.current.contains(event.target)) {
       setEditMode(false);
     }
   }
 
-  function useOutsideAlerter(ref) {
-    useEffect(() => {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
+  // implement outside click
+  useOutsideAlerter(editIcon, handleClickOutside);
 
   const handleSelectedFilter = (key) => {
     let newFilteredList = [...activity.todo_items];
@@ -170,9 +169,9 @@ export default function ActivityDetail() {
   };
 
   const getActivityDetail = () => {
-    axios
-      .get(url + "/" + activityId)
-      .then(({ data }) => {
+    fetch(url + "/" + activityId)
+      .then((response) => response.json())
+      .then((data) => {
         setActivity(data);
         setInputTitle(data.title);
         setFilteredList(data.todo_items);
@@ -181,11 +180,17 @@ export default function ActivityDetail() {
   };
 
   const postUpdateActivity = () => {
-    axios
-      .patch(url + "/" + activityId, {
+    fetch(url + "/" + activityId, {
+      method: "PATCH",
+      body: JSON.stringify({
         title: inputTitle,
-      })
-      .then(({ data }) => {
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
         setActivity({ ...activity, title: data.title });
         setInputTitle(data.title);
       })
@@ -194,9 +199,17 @@ export default function ActivityDetail() {
 
   const deleteList = () => {
     setLoadingDelete(true);
-    axios
-      .delete("https://todo.api.devcode.gethired.id/todo-items/" + selectedItem.id)
-      .then((response) => {
+    fetch("https://todo.api.devcode.gethired.id/todo-items/" + selectedItem.id, {
+      method: "DELETE",
+      body: JSON.stringify({
+        title: inputTitle,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => {
         getActivityDetail();
         setLoadingDelete(false);
         setShowAlert(true);
@@ -208,12 +221,18 @@ export default function ActivityDetail() {
   };
 
   const updateIsActiveItem = (isActive, itemId) => {
-    axios
-      .patch("https://todo.api.devcode.gethired.id/todo-items/" + itemId, {
+    fetch("https://todo.api.devcode.gethired.id/todo-items/" + itemId, {
+      method: "PATCH",
+      body: JSON.stringify({
         is_active: isActive,
         _comment: "list of priority is : very-high, high, normal, low, very-low | defalut value is very-high",
-      })
-      .then(({ data }) => {
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => {
         getActivityDetail();
       })
       .catch((err) => {

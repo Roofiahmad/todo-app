@@ -1,6 +1,5 @@
 import React, { useEffect, useState, lazy } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 import { ReactComponent as AddIcon } from "../assets/add.svg";
 import { ReactComponent as TrashIcon } from "../assets/trash.svg";
@@ -38,13 +37,19 @@ export default function Home() {
 
   const postActivity = () => {
     setLoadingButton(true);
-    axios
-      .post(url, {
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
         title: "New Activity",
         email: "roofiahmadsidiq@gmail.com",
         _comment: "email digunakan untuk membedakan list data yang digunakan antar aplikasi",
-      })
-      .then(({ data }) => {
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
         getListActivity();
         setTimeout(() => {
           setLoadingButton(false);
@@ -59,9 +64,15 @@ export default function Home() {
   const deleteActivity = () => {
     const activityId = selectedItem.id;
     setLoadingDelete(true);
-    axios
-      .delete(url + "/" + activityId)
-      .then((response) => {
+
+    fetch(url + "/" + activityId, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => {
         getListActivity();
         setShowAlert(true);
         setLoadingDelete(false);
@@ -74,13 +85,15 @@ export default function Home() {
 
   const getListActivity = () => {
     setLoadingPage(true);
-    axios
-      .get(url, {
-        params: {
-          email: "roofiahmadsidiq@gmail.com",
-        },
-      })
-      .then(({ data }) => {
+
+    fetch(url + "?email=roofiahmadsidiq%40gmail.com", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
         const listData = data.data.map((list) => {
           return { ...list, formatted_created_at: new Date(list.created_at).toLocaleString("id-ID", { dateStyle: "long" }) };
         });
