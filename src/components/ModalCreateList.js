@@ -54,9 +54,12 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
     const newTitle = event.target.value;
     setTitle(newTitle);
   };
+  const isEmptyObject = (obj) => {
+    return Object.keys(obj).length === 0;
+  };
 
   const onSaveData = () => {
-    if (!title) return console.log("field cant be empty");
+    if (!title || isEmptyObject(priority)) return console.log("field cant be empty");
     if (mode === "edit") return postEditItem();
     return postNewItem();
   };
@@ -111,26 +114,24 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   useEffect(() => {
-    console.log(mode);
     if (mode === "edit") {
       setTitle(item.title);
-      const oldPriority = options.filter((option) => option.value === item.priority);
-      setPriority(oldPriority);
+      setPriority(oldItemPriority(item));
     } else {
       setTitle("");
-      setPriority(options[0]);
+      setPriority({});
     }
   }, [mode]);
 
   useEffect(() => {
-    if (title.trim() !== "") {
+    if (title.trim() !== "" && !isEmptyObject(priority)) {
       if (isDisabled) {
         setIsDisabled(false);
       }
     } else {
       setIsDisabled(true);
     }
-  }, [title]);
+  }, [title, priority]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
@@ -161,7 +162,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
         </label>
         <Select
           className="modal-add-priority-dropdown"
-          defaultValue={mode === "edit" ? oldItemPriority(item) : options[0]}
+          defaultValue={mode === "edit" ? oldItemPriority(item) : {}}
           options={options}
           styles={colourStyles}
           onChange={handlePriorityInput}

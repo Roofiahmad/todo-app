@@ -31,7 +31,7 @@ export default function ItemList({ updateIsActiveItem, item, handleModalListShow
         onChange={() => handleCheckboxChange()}
         className="form-check-input todo-item-checkbox m-0"
         type="checkbox"
-        checked={selectedItem.is_active}
+        checked={!selectedItem.is_active}
         data-cy="todo-item-checkbox"
       />
       <span
@@ -39,7 +39,7 @@ export default function ItemList({ updateIsActiveItem, item, handleModalListShow
         className="todo-item-priority-indicator"
         data-cy="todo-item-priority-indicator"
       ></span>
-      <label className={`todo-item-title ${selectedItem.is_active ? "unactive" : ""}`} data-cy="todo-item-title">
+      <label className={`todo-item-title ${!selectedItem.is_active ? "unactive" : ""}`} data-cy="todo-item-title">
         {selectedItem.title}
       </label>
       <span onClick={() => handleModalListShow("edit", item)} role="button" className="todo-item-edit-button" data-cy="todo-item-edit-button">
