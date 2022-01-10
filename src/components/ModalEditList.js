@@ -9,47 +9,47 @@ import "./ModalCreate.scss";
 
 const url = "https://todo.api.devcode.gethired.id/todo-items";
 
-export default function ModalCreateList({ isModalCreateShow, handleModalCreateClose }) {
+const dot = (color = "transparent") => ({
+  alignItems: "center",
+  display: "flex",
+
+  ":before": {
+    backgroundColor: color,
+    borderRadius: 10,
+    content: '" "',
+    display: "block",
+    marginRight: 8,
+    height: 10,
+    width: 10,
+  },
+});
+
+const colourStyles = {
+  control: (styles) => ({ ...styles, backgroundColor: "white", height: "52px", padding: "0px 5px", border: "1px solid #E5E5E5" }),
+  option: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+  input: (styles) => ({ ...styles, ...dot() }),
+  singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
+};
+
+const options = [
+  { value: "very-high", label: "Very High", color: "#ED4C5C" },
+  { value: "high", label: "High", color: "#F8A541" },
+  { value: "normal", label: "Medium", color: "#00A790" },
+  { value: "low", label: "Low", color: "#428BC1" },
+  { value: "very-low", label: "Very Low", color: "#8942C1" },
+];
+
+export default function ModalCreateList({ item, isModalEditShow, handleModalEditClose }) {
   const { id: activityId } = useParams();
-  const [title, setTitle] = useState(" ");
+  const [title, setTitle] = useState("");
   const [priority, setPriority] = useState({});
   const [isLoading, setIsloading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const options = [
-    { value: "very-high", label: "Very High", color: "#ED4C5C" },
-    { value: "high", label: "High", color: "#F8A541" },
-    { value: "normal", label: "Medium", color: "#00A790" },
-    { value: "low", label: "Low", color: "#428BC1" },
-    { value: "very-low", label: "Very Low", color: "#8942C1" },
-  ];
-
-  const dot = (color = "transparent") => ({
-    alignItems: "center",
-    display: "flex",
-
-    ":before": {
-      backgroundColor: color,
-      borderRadius: 10,
-      content: '" "',
-      display: "block",
-      marginRight: 8,
-      height: 10,
-      width: 10,
-    },
-  });
-
-  const colourStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "white", height: "52px", padding: "0px 5px", border: "1px solid #E5E5E5" }),
-    option: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
-    input: (styles) => ({ ...styles, ...dot() }),
-    singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) }),
-  };
-
   const handleClearValue = () => {
-    setPriority(options[0]);
     setTitle("");
-    handleModalCreateClose();
+    setPriority(options[0]);
+    handleModalEditClose();
   };
 
   const handlePriorityInput = (selectedValue) => {
@@ -63,21 +63,19 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
 
   const onSaveData = (e) => {
     e.preventDefault();
-    postNewItem();
+    postEditItem();
   };
 
-  const postNewItem = () => {
+  const postEditItem = () => {
     setIsloading(true);
     axios
-      .post(url + "/", {
+      .patch(url + "/" + item.id, {
         title: title,
         activity_group_id: activityId,
         priority: priority.value,
         _comment: "list of priority is : very-high, high, normal, low, very-low | defalut value is very-high",
       })
       .then(({ data }) => {
-        setTitle("");
-        setPriority(options[0]);
         setTimeout(() => {
           setIsloading(false);
           handleClearValue();
@@ -89,8 +87,21 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
       });
   };
 
+  const oldItemPriority = (item) => {
+    const oldPriority = options.filter((option) => option.value === item.priority)[0];
+    return oldPriority;
+  };
+
   useEffect(() => {
-    if (title.trim() !== "") {
+    if (item.title) {
+      // execute when item.title available first time
+      setTitle(item.title);
+      setPriority(oldItemPriority(item));
+    }
+  }, [item]);
+
+  useEffect(() => {
+    if (title !== "" && title !== undefined) {
       if (isDisabled) {
         setIsDisabled(false);
       }
@@ -103,7 +114,7 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
 
   return (
-    <Modal show={isModalCreateShow} onHide={handleClearValue} data-cy="modal-add" dialogClassName="modal-add">
+    <Modal show={isModalEditShow} onHide={handleClearValue} data-cy="modal-add" dialogClassName="modal-add">
       <form onSubmit={(e) => onSaveData(e)}>
         <Modal.Header>
           <Modal.Title data-cy="modal-add-title" className="modal-add-title">
@@ -131,7 +142,7 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
           <Select
             name="priority"
             className="modal-add-priority-dropdown"
-            defaultValue={options[0]}
+            defaultValue={oldItemPriority(item)}
             options={options}
             styles={colourStyles}
             onChange={handlePriorityInput}

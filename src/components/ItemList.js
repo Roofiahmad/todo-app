@@ -12,7 +12,7 @@ const options = {
   "very-low": "#8942C1",
 };
 
-export default function ItemList({ updateIsActiveItem, item, handleModalListShow, handleModalDeleteShow }) {
+export default function ItemList({ updateIsActiveItem, item, handleModalEditShow, handleModalDeleteShow }) {
   const [selectedItem, setSelectedItem] = useState({ is_active: false, title: "", priority: "low" });
 
   const handleCheckboxChange = () => {
@@ -42,7 +42,7 @@ export default function ItemList({ updateIsActiveItem, item, handleModalListShow
       <label className={`todo-item-title ${!selectedItem.is_active ? "unactive" : ""}`} data-cy="todo-item-title">
         {selectedItem.title}
       </label>
-      <span onClick={() => handleModalListShow("edit", item)} role="button" className="todo-item-edit-button" data-cy="todo-item-edit-button">
+      <span onClick={() => handleModalEditShow(item)} role="button" className="todo-item-edit-button" data-cy="todo-item-edit-button">
         <EditIcon className="todo-item-edit-button-icon" />
       </span>
       <span onClick={() => handleModalDeleteShow(item)} role="button" className="todo-item-delete-button" data-cy="todo-item-delete-button">

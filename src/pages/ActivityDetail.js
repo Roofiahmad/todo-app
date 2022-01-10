@@ -17,9 +17,10 @@ import { ReactComponent as CheckIcon } from "../assets/sort-applied.svg";
 import emptyListImage from "../assets/empty-list.png";
 import "./ActivityDetail.scss";
 
-const ModalCreateList = lazy(() => import("../components/ModalCreateList"));
 const ItemList = lazy(() => import("../components/ItemList"));
 const Alert = lazy(() => import("../components/Alert"));
+const ModalCreateList = lazy(() => import("../components/ModalCreateList"));
+const ModalEditList = lazy(() => import("../components/ModalEditList"));
 const ModalDelete = lazy(() => import("../components/ModalDelete"));
 
 const url = "https://todo.api.devcode.gethired.id/activity-groups";
@@ -33,7 +34,6 @@ export default function ActivityDetail() {
   const [activity, setActivity] = useState({ todo_items: [] });
   const [filteredList, setFilteredList] = useState([]);
   const [selectedItem, setSelectedItem] = useState({});
-  const [modalListMode, setModalListMode] = useState("");
   const [appliedFilter, setAppliedFilter] = useState("newest");
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [inputTitle, setInputTitle] = useState("");
@@ -47,31 +47,41 @@ export default function ActivityDetail() {
     { icon: <UnfinishIcon />, text: "Belum Selesai", key: "unfinish" },
   ];
 
-  //   modal
-  const [isModalListShow, setModalListShow] = useState(false);
+  //   modal create
+  const [isModalCreateShow, setModalCreateShow] = useState(false);
 
-  const handleModalListClose = () => {
-    setModalListShow(false);
-    setSelectedItem({});
-    setModalListMode("");
-    getActivityDetail();
+  const handleModalCreateShow = () => {
+    setModalCreateShow(true);
   };
-  const handleModalListShow = (mode, item) => {
+
+  const handleModalCreateClose = () => {
+    getActivityDetail();
+    setModalCreateShow(false);
+  };
+
+  // modal edit
+  const [isModalEditShow, setModalEditShow] = useState(false);
+
+  const handleModalEditShow = (item) => {
     setSelectedItem(item);
-    setModalListMode(mode);
-    setModalListShow(true);
+    setModalEditShow(true);
+  };
+
+  const handleModalEditClose = () => {
+    getActivityDetail();
+    setModalEditShow(false);
   };
 
   const [isModalDeleteShow, setModalDeleteShow] = useState(false);
-  const handleModalDeleteClose = () => {
-    setModalDeleteShow(false);
-    setSelectedItem({});
-    setModalListMode("");
-    getActivityDetail();
-  };
+
   const handleModalDeleteShow = (item) => {
     setSelectedItem(item);
     setModalDeleteShow(true);
+  };
+
+  const handleModalDeleteClose = () => {
+    setModalDeleteShow(false);
+    getActivityDetail();
   };
 
   function handleFocus() {
@@ -80,7 +90,6 @@ export default function ActivityDetail() {
 
   function onSubmitForm(e) {
     e.preventDefault();
-
     if (editMode && activity.title !== inputTitle && inputTitle !== "") {
       postUpdateActivity();
     }
@@ -100,8 +109,8 @@ export default function ActivityDetail() {
     }
   }, [editMode]);
 
-  useEffect(() => {
-    getActivityDetail();
+  useEffect((fetchingActivity = getActivityDetail) => {
+    fetchingActivity();
   }, []);
 
   // implement outside click
@@ -275,7 +284,7 @@ export default function ActivityDetail() {
             </Dropdown.Menu>
           </Dropdown>
           <button
-            onClick={() => handleModalListShow("create", {})}
+            onClick={() => handleModalCreateShow()}
             className="todo-add-button btn btn-primary d-flex align-items-center justify-content-center"
             data-cy="todo-add-button"
           >
@@ -292,7 +301,7 @@ export default function ActivityDetail() {
                 key={list.id}
                 item={list}
                 updateIsActiveItem={updateIsActiveItem}
-                handleModalListShow={handleModalListShow}
+                handleModalEditShow={handleModalEditShow}
                 handleModalDeleteShow={handleModalDeleteShow}
               />
             );
@@ -302,7 +311,7 @@ export default function ActivityDetail() {
         <div className="image-container">
           <img
             style={{ cursor: "pointer" }}
-            onClick={() => handleModalListShow("create", {})}
+            onClick={() => handleModalCreateShow()}
             loading="lazy"
             src={emptyListImage}
             alt="empty activity"
@@ -312,7 +321,8 @@ export default function ActivityDetail() {
         </div>
       )}
 
-      <ModalCreateList mode={modalListMode} item={selectedItem} isModalListShow={isModalListShow} handleModalListClose={handleModalListClose} />
+      <ModalCreateList isModalCreateShow={isModalCreateShow} handleModalCreateClose={handleModalCreateClose} />
+      <ModalEditList item={selectedItem} isModalEditShow={isModalEditShow} handleModalEditClose={handleModalEditClose} />
       <ModalDelete
         option="List Item"
         item={selectedItem}
