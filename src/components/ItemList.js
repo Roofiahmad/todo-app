@@ -13,13 +13,17 @@ const options = {
 };
 
 export default function ItemList({ updateIsActiveItem, item, handleModalListShow, handleModalDeleteShow }) {
-  const [isCheckbox, setIsCheckbox] = useState(!item.is_active);
+  const [selectedItem, setSelectedItem] = useState({ is_active: false, title: "", priority: "low" });
 
   const handleCheckboxChange = () => {
     const isActive = item.is_active ? 0 : 1;
-    setIsCheckbox(isActive);
+    setSelectedItem({ ...selectedItem, is_active: isActive });
     updateIsActiveItem(isActive, item.id);
   };
+
+  useEffect(() => {
+    setSelectedItem(item);
+  }, [item]);
 
   return (
     <div className="todo-item d-flex align-items-center shadow-sm mb-xl-2 px-xl-4" data-cy="todo-item">
@@ -27,16 +31,16 @@ export default function ItemList({ updateIsActiveItem, item, handleModalListShow
         onChange={() => handleCheckboxChange()}
         className="form-check-input todo-item-checkbox m-0"
         type="checkbox"
-        checked={isCheckbox}
+        checked={selectedItem.is_active}
         data-cy="todo-item-checkbox"
       />
       <span
-        style={{ backgroundColor: options[item.priority] }}
+        style={{ backgroundColor: options[selectedItem.priority] }}
         className="todo-item-priority-indicator"
         data-cy="todo-item-priority-indicator"
       ></span>
-      <label className={`todo-item-title ${isCheckbox ? "unactive" : ""}`} data-cy="todo-item-title">
-        {item.title}
+      <label className={`todo-item-title ${selectedItem.is_active ? "unactive" : ""}`} data-cy="todo-item-title">
+        {selectedItem.title}
       </label>
       <span onClick={() => handleModalListShow("edit", item)} role="button" className="todo-item-edit-button" data-cy="todo-item-edit-button">
         <EditIcon className="todo-item-edit-button-icon" />

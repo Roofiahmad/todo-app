@@ -75,6 +75,7 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
           setIsloading(false);
           handleModalListClose();
           setTitle("");
+          setPriority(options[0]);
         }, 300);
       })
       .catch((err) => {
@@ -110,11 +111,16 @@ export default function ModalCreateList({ mode = "", item = {}, isModalListShow,
   };
 
   useEffect(() => {
-    if (item.title) {
-      const oldTitle = item.title;
-      setTitle(oldTitle);
+    console.log(mode);
+    if (mode === "edit") {
+      setTitle(item.title);
+      const oldPriority = options.filter((option) => option.value === item.priority);
+      setPriority(oldPriority);
+    } else {
+      setTitle("");
+      setPriority(options[0]);
     }
-  }, [item]);
+  }, [mode]);
 
   useEffect(() => {
     if (title.trim() !== "") {
