@@ -24,8 +24,13 @@ const ModalDelete = lazy(() => import("../components/ModalDelete"));
 
 const url = "https://todo.api.devcode.gethired.id/activity-groups";
 
-function useOutsideAlerter(ref, handleClickOutside) {
+function useOutsideAlerter(ref, cb) {
   useEffect(() => {
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        cb(false);
+      }
+    }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -92,20 +97,12 @@ export default function ActivityDetail() {
     getActivityDetail();
   };
 
-  function handleFocus() {
-    setEditMode(true);
-  }
-
   function onSubmitForm(e) {
     e.preventDefault();
     if (editMode && activity.title !== inputTitle && inputTitle !== "") {
       postUpdateActivity();
     }
   }
-
-  useEffect(() => {
-    if (editMode) searchInput.current.focus();
-  }, [editMode]);
 
   const changeHandler = (evt) => {
     setInputTitle(evt.target.value);
@@ -125,18 +122,8 @@ export default function ActivityDetail() {
     handleSelectedFilter(appliedFilter);
   }, [activity]);
 
-  useEffect(() => {
-    console.log(filteredList);
-  }, [filteredList]);
-
-  function handleClickOutside(event) {
-    if (editIcon.current && !editIcon.current.contains(event.target)) {
-      setEditMode(false);
-    }
-  }
-
   // implement outside click
-  useOutsideAlerter(editIcon, handleClickOutside);
+  useOutsideAlerter(editIcon, setEditMode);
 
   const handleSelectedFilter = (key) => {
     let newFilteredList = [...activity.todo_items];
@@ -172,7 +159,6 @@ export default function ActivityDetail() {
       default:
         break;
     }
-    console.log(newFilteredList);
     setFilteredList(newFilteredList);
   };
 
@@ -261,7 +247,9 @@ export default function ActivityDetail() {
               <input
                 style={{ width: editMode ? "100%" : inputTitle.length + 1 + "ch" }}
                 onChange={changeHandler}
-                ref={searchInput}
+                ref={(node) => {
+                  if (node) node.focus();
+                }}
                 value={inputTitle}
                 type="text"
                 className="btn todo-title"
@@ -269,12 +257,12 @@ export default function ActivityDetail() {
               />
             </form>
           ) : (
-            <h1 onClick={handleFocus} className="todo-title " data-cy="todo-title">
+            <h1 onClick={() => setEditMode(true)} className="todo-title " data-cy="todo-title">
               {inputTitle}
             </h1>
           )}
-          <button className="btn todo-title-edit-button mb-auto mx-4" data-cy="todo-title-edit-button">
-            <EditIcon ref={editIcon} className="todo-title-edit-button-icon" />
+          <button ref={editIcon} className="btn todo-title-edit-button mb-auto mx-4" data-cy="todo-title-edit-button">
+            <EditIcon className="todo-title-edit-button-icon" />
           </button>
         </div>
         <div className="d-flex ">
