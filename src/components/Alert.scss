@@ -1,6 +1,18 @@
 @import "../styles/variables.scss";
 
 .alert-container {
+  border: 1px;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   .modal-content {
     width: 490px !important;
     height: 58px !important;

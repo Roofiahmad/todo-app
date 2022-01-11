@@ -30,6 +30,7 @@ export default function Home() {
 
   const handleDeleteActivity = (activityId) => {
     const filteredItem = listItem.filter((item) => item.id === activityId)[0];
+    console.log("deleted activity");
 
     setSelectedItem(filteredItem);
     setIsModalDeleteShow(true);
@@ -173,15 +174,16 @@ export default function Home() {
             </div>
           </div>
         )}
-        <ModalDelete
-          isModalDeleteShow={isModalDeleteShow}
-          handleModalDeleteClose={handleModalDeleteClose}
-          deleteActivity={deleteActivity}
-          item={selectedItem}
-          option={"activity"}
-          loadingDelete={loadingDelete}
-        />
       </div>
+      <ModalDelete
+        isModalDeleteShow={isModalDeleteShow}
+        handleModalDeleteClose={handleModalDeleteClose}
+        deleteActivity={deleteActivity}
+        item={selectedItem}
+        option={"activity"}
+        loadingDelete={loadingDelete}
+      />
+      <Alert title={"Activity"} showAlert={showAlert} setShowAlert={setShowAlert} />
       {loadingPage ? (
         <div className="d-flex justify-content-center">
           <div className="spinner-border text-primary position-absolute top-50 start-50" role="status">
@@ -191,7 +193,6 @@ export default function Home() {
       ) : (
         ""
       )}
-      <Alert title={"Activity"} showAlert={showAlert} setShowAlert={setShowAlert} />
     </>
   );
 }

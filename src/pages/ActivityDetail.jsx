@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, lazy } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import Dropdown from "react-bootstrap/Dropdown";
 import { ReactComponent as AddIcon } from "../assets/add.svg";
 import { ReactComponent as BackIcon } from "../assets/chevron-left.svg";
 import { ReactComponent as EditIcon } from "../assets/edit.svg";
@@ -41,6 +41,7 @@ export default function ActivityDetail() {
   const { id: activityId } = useParams();
 
   const editIcon = useRef(null);
+  let dropDownELement;
   const [editMode, setEditMode] = useState(false);
   const [activity, setActivity] = useState({ todo_items: [] });
   const [filteredList, setFilteredList] = useState([]);
@@ -49,7 +50,7 @@ export default function ActivityDetail() {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [inputTitle, setInputTitle] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [dropDownToggle, setDropDownToggle] = useState(true);
+  const [dropDownToggle, setDropDownToggle] = useState(false);
 
   const listFilter = [
     { icon: <NewestIcon />, text: "Terbaru", key: "newest" },
@@ -156,7 +157,7 @@ export default function ActivityDetail() {
       default:
         break;
     }
-    setDropDownToggle(true);
+    setDropDownToggle(false);
     setFilteredList(newFilteredList);
   };
 
@@ -267,16 +268,12 @@ export default function ActivityDetail() {
             </button>
           </div>
           <div className="d-flex">
-            <div className="dropdown">
-              <button
-                onClick={() => setDropDownToggle(!dropDownToggle)}
-                className="btn btn-outline-secondary dropdown-toggle todo-sort-button"
-                type="button"
-                data-cy="todo-sort-button"
-              >
+            <Dropdown>
+              <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic" className=" todo-sort-button" type="button" data-cy="todo-sort-button">
                 <SortIcon className="arrow-sort" data-cy="arrow-sort" />
-              </button>
-              <ul hidden={dropDownToggle} className="sort-parent shadow border rounded">
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="sort-parent shadow border rounded">
                 {listFilter.map((list, index) => {
                   return (
                     <li
@@ -302,8 +299,8 @@ export default function ActivityDetail() {
                     </li>
                   );
                 })}
-              </ul>
-            </div>
+              </Dropdown.Menu>
+            </Dropdown>
             <button
               onClick={() => handleModalCreateShow()}
               className="todo-add-button btn btn-primary d-flex align-items-center justify-content-center"
@@ -341,23 +338,22 @@ export default function ActivityDetail() {
             />
           </div>
         )}
-
-        <ModalEditList
-          item={selectedItem}
-          isModalEditShow={isModalEditShow}
-          handleModalEditClose={handleModalEditClose}
-          getActivityDetail={getActivityDetail}
-        />
-        <ModalDelete
-          option="List Item"
-          item={selectedItem}
-          isModalDeleteShow={isModalDeleteShow}
-          handleModalDeleteClose={handleModalDeleteClose}
-          deleteList={deleteList}
-          loadingDelete={loadingDelete}
-        />
-        <Alert title={"List Item"} showAlert={showAlert} setShowAlert={setShowAlert} />
       </div>
+      <ModalEditList
+        item={selectedItem}
+        isModalEditShow={isModalEditShow}
+        handleModalEditClose={handleModalEditClose}
+        getActivityDetail={getActivityDetail}
+      />
+      <ModalDelete
+        option="List Item"
+        item={selectedItem}
+        isModalDeleteShow={isModalDeleteShow}
+        handleModalDeleteClose={handleModalDeleteClose}
+        deleteList={deleteList}
+        loadingDelete={loadingDelete}
+      />
+      <Alert title={"List Item"} showAlert={showAlert} setShowAlert={setShowAlert} />
       <ModalCreateList isModalCreateShow={isModalCreateShow} handleModalCreateClose={handleModalCreateClose} getActivityDetail={getActivityDetail} />
     </>
   );
