@@ -1,5 +1,4 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
+import React, { useRef } from "react";
 import { ReactComponent as WarningIcon } from "../assets/warning.svg";
 
 import "./ModalDelete.scss";
@@ -18,24 +17,28 @@ export default function ModalDelete({
     "List Item": deleteList,
   };
 
+  const modalContent = useRef(null);
+
   const handleDeleteItem = () => {
     const execute = deleteOption[option];
     execute();
     handleModalDeleteClose();
   };
 
-  return (
-    <div className="modal-delete-container">
-      <Modal show={isModalDeleteShow} onHide={handleModalDeleteClose} className="modal-delete" data-cy="modal-delete">
-        <Modal.Header>
-          <Modal.Title>
-            <WarningIcon className="modal-delete-icon" data-cy="modal-delete-icon" />
-            <p className="modal-delete-title" data-cy="modal-delete-title">
-              Apakah anda yakin menghapus {option} <span>"{item.title}" ?</span>
-            </p>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Footer>
+  const handleClickOutside = (event) => {
+    if (!modalContent.current.contains(event.target)) handleModalDeleteClose();
+  };
+
+  return isModalDeleteShow ? (
+    <div className="modal bg-modal modal-delete" data-cy="modal-delete" onClick={handleClickOutside}>
+      <div className="modal-content" ref={modalContent}>
+        <div className="modal-header">
+          <WarningIcon className="modal-delete-icon" data-cy="modal-delete-icon" />
+          <p className="modal-delete-title" data-cy="modal-delete-title">
+            Apakah anda yakin menghapus {option} <span>"{item.title}" ?</span>
+          </p>
+        </div>
+        <div className="modal-footer">
           <button className="modal-delete-cancel-button btn btn-secondary" data-cy="modal-delete-cancel-button" onClick={handleModalDeleteClose}>
             Batal
           </button>
@@ -48,8 +51,10 @@ export default function ModalDelete({
               "Hapus"
             )}
           </button>
-        </Modal.Footer>
-      </Modal>
+        </div>
+      </div>
     </div>
+  ) : (
+    ""
   );
 }

@@ -234,129 +234,131 @@ export default function ActivityDetail() {
   };
 
   return (
-    <div className="activity-detail">
-      <div className=" d-flex justify-content-between align-items-center mt-xl-5 mt-3">
-        <div className="navigation d-flex justify-content-between align-items-center">
-          <Link to="/">
-            <button className="btn todo-back-button me-2" data-cy="todo-back-button">
-              <BackIcon className="todo-back-icon" />
+    <>
+      <div className="activity-detail">
+        <div className=" d-flex justify-content-between align-items-center mt-xl-5 mt-3">
+          <div className="navigation d-flex justify-content-between align-items-center">
+            <Link to="/">
+              <button className="btn todo-back-button me-2" data-cy="todo-back-button">
+                <BackIcon className="todo-back-icon" />
+              </button>
+            </Link>
+            {editMode ? (
+              <form onSubmit={(e) => onSubmitForm(e)}>
+                <input
+                  style={{ width: editMode ? "100%" : inputTitle.length + 1 + "ch" }}
+                  onChange={changeHandler}
+                  ref={(node) => {
+                    if (node) node.focus();
+                  }}
+                  value={inputTitle}
+                  type="text"
+                  className="btn todo-title"
+                  data-cy="todo-title"
+                />
+              </form>
+            ) : (
+              <h1 onClick={() => setEditMode(true)} className="todo-title " data-cy="todo-title">
+                {inputTitle}
+              </h1>
+            )}
+            <button ref={editIcon} className="btn todo-title-edit-button mb-auto mx-4" data-cy="todo-title-edit-button">
+              <EditIcon className="todo-title-edit-button-icon" />
             </button>
-          </Link>
-          {editMode ? (
-            <form onSubmit={(e) => onSubmitForm(e)}>
-              <input
-                style={{ width: editMode ? "100%" : inputTitle.length + 1 + "ch" }}
-                onChange={changeHandler}
-                ref={(node) => {
-                  if (node) node.focus();
-                }}
-                value={inputTitle}
-                type="text"
-                className="btn todo-title"
-                data-cy="todo-title"
-              />
-            </form>
-          ) : (
-            <h1 onClick={() => setEditMode(true)} className="todo-title " data-cy="todo-title">
-              {inputTitle}
-            </h1>
-          )}
-          <button ref={editIcon} className="btn todo-title-edit-button mb-auto mx-4" data-cy="todo-title-edit-button">
-            <EditIcon className="todo-title-edit-button-icon" />
-          </button>
-        </div>
-        <div className="d-flex">
-          <div className="dropdown">
-            <button
-              onClick={() => setDropDownToggle(!dropDownToggle)}
-              className="btn btn-outline-secondary dropdown-toggle todo-sort-button"
-              type="button"
-              data-cy="todo-sort-button"
-            >
-              <SortIcon className="arrow-sort" data-cy="arrow-sort" />
-            </button>
-            <ul hidden={dropDownToggle} className="sort-parent shadow border rounded">
-              {listFilter.map((list, index) => {
-                return (
-                  <li
-                    onClick={() => handleSelectedFilter(list.key)}
-                    key={index}
-                    className="sort-selection d-flex justify-content-start align-items-center dropdown-item"
-                    data-cy="sort-selection"
-                    role="button"
-                  >
-                    <span className="sort-selection-icon" data-cy="sort-selection-icon">
-                      {list.icon}
-                    </span>
-                    <span className="sort-selection-title" data-cy="sort-selection-title">
-                      {list.text}
-                    </span>
-                    {appliedFilter === list.key ? (
-                      <span className="sort-selection-selected ms-auto me-4" data-cy="sort-selection-selected">
-                        <CheckIcon />
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
           </div>
-          <button
-            onClick={() => handleModalCreateShow()}
-            className="todo-add-button btn btn-primary d-flex align-items-center justify-content-center"
-            data-cy="todo-add-button"
-          >
-            <AddIcon className="me-2 icon" />
-            <span className="label">Tambah</span>
-          </button>
+          <div className="d-flex">
+            <div className="dropdown">
+              <button
+                onClick={() => setDropDownToggle(!dropDownToggle)}
+                className="btn btn-outline-secondary dropdown-toggle todo-sort-button"
+                type="button"
+                data-cy="todo-sort-button"
+              >
+                <SortIcon className="arrow-sort" data-cy="arrow-sort" />
+              </button>
+              <ul hidden={dropDownToggle} className="sort-parent shadow border rounded">
+                {listFilter.map((list, index) => {
+                  return (
+                    <li
+                      onClick={() => handleSelectedFilter(list.key)}
+                      key={index}
+                      className="sort-selection d-flex justify-content-start align-items-center dropdown-item"
+                      data-cy="sort-selection"
+                      role="button"
+                    >
+                      <span className="sort-selection-icon" data-cy="sort-selection-icon">
+                        {list.icon}
+                      </span>
+                      <span className="sort-selection-title" data-cy="sort-selection-title">
+                        {list.text}
+                      </span>
+                      {appliedFilter === list.key ? (
+                        <span className="sort-selection-selected ms-auto me-4" data-cy="sort-selection-selected">
+                          <CheckIcon />
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <button
+              onClick={() => handleModalCreateShow()}
+              className="todo-add-button btn btn-primary d-flex align-items-center justify-content-center"
+              data-cy="todo-add-button"
+            >
+              <AddIcon className="me-2 icon" />
+              <span className="label">Tambah</span>
+            </button>
+          </div>
         </div>
-      </div>
-      {filteredList.length ? (
-        <div className="todo-item-container d-flex flex-column mt-xl-4">
-          {filteredList.map((list) => {
-            return (
-              <ItemList
-                key={list.id}
-                item={list}
-                updateIsActiveItem={updateIsActiveItem}
-                handleModalEditShow={handleModalEditShow}
-                handleModalDeleteShow={handleModalDeleteShow}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <div className="image-container">
-          <img
-            style={{ cursor: "pointer" }}
-            onClick={() => handleModalCreateShow()}
-            loading="lazy"
-            src={emptyListImage}
-            alt="empty activity"
-            className=" img-fluid"
-            data-cy="todo-empty-state"
-          />
-        </div>
-      )}
+        {filteredList.length ? (
+          <div className="todo-item-container d-flex flex-column mt-xl-4">
+            {filteredList.map((list) => {
+              return (
+                <ItemList
+                  key={list.id}
+                  item={list}
+                  updateIsActiveItem={updateIsActiveItem}
+                  handleModalEditShow={handleModalEditShow}
+                  handleModalDeleteShow={handleModalDeleteShow}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <div className="image-container">
+            <img
+              style={{ cursor: "pointer" }}
+              onClick={() => handleModalCreateShow()}
+              loading="lazy"
+              src={emptyListImage}
+              alt="empty activity"
+              className=" img-fluid"
+              data-cy="todo-empty-state"
+            />
+          </div>
+        )}
 
+        <ModalEditList
+          item={selectedItem}
+          isModalEditShow={isModalEditShow}
+          handleModalEditClose={handleModalEditClose}
+          getActivityDetail={getActivityDetail}
+        />
+        <ModalDelete
+          option="List Item"
+          item={selectedItem}
+          isModalDeleteShow={isModalDeleteShow}
+          handleModalDeleteClose={handleModalDeleteClose}
+          deleteList={deleteList}
+          loadingDelete={loadingDelete}
+        />
+        <Alert title={"List Item"} showAlert={showAlert} setShowAlert={setShowAlert} />
+      </div>
       <ModalCreateList isModalCreateShow={isModalCreateShow} handleModalCreateClose={handleModalCreateClose} getActivityDetail={getActivityDetail} />
-      <ModalEditList
-        item={selectedItem}
-        isModalEditShow={isModalEditShow}
-        handleModalEditClose={handleModalEditClose}
-        getActivityDetail={getActivityDetail}
-      />
-      <ModalDelete
-        option="List Item"
-        item={selectedItem}
-        isModalDeleteShow={isModalDeleteShow}
-        handleModalDeleteClose={handleModalDeleteClose}
-        deleteList={deleteList}
-        loadingDelete={loadingDelete}
-      />
-      <Alert title={"List Item"} showAlert={showAlert} setShowAlert={setShowAlert} />
-    </div>
+    </>
   );
 }

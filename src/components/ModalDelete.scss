@@ -5,67 +5,67 @@
   margin: 0;
   padding: 0;
 
-  .modal-dialog {
-    position: relative;
-    margin: 0px;
-    padding: 0px;
+  .modal-content {
+    width: 490px !important;
+    height: 355px !important;
+    border-radius: 12px;
+    padding: 1.5rem 1.5rem;
 
-    .modal-content {
-      width: 490px !important;
-      height: 355px !important;
-      border-radius: 12px;
-      padding: 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
+    .modal-header {
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      text-align: center;
+    }
 
-      .modal-header,
-      .modal-footer {
-        border: none;
-      }
+    .modal-header,
+    .modal-footer {
+      border: none;
+    }
 
-      .modal-title {
-        text-align: center;
-      }
+    .modal-title {
+      text-align: center;
+    }
 
-      .modal-footer {
-        display: flex;
-        justify-content: center;
+    .modal-footer {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .modal-delete {
+    &-icon {
+      width: 84px;
+      height: 84px;
+      margin-bottom: 1.5rem;
+    }
+    &-title {
+      width: 365px;
+      font-size: 1.125rem;
+      font-weight: 500;
+
+      span {
+        font-weight: 700;
       }
     }
 
-    .modal-delete {
-      &-icon {
-        width: 84px;
-        height: 84px;
-        margin-bottom: 1.5rem;
-      }
-      &-title {
-        width: 365px;
-        font-size: 1.125rem;
-        font-weight: 500;
-
-        span {
-          font-weight: 700;
-        }
-      }
-
-      &-cancel-button,
-      &-confirm-button {
-        width: 150px;
-        height: 54px;
-        border-radius: 45px;
-        font-size: 1.125rem;
-        font-weight: 600;
-      }
-      &-cancel-button {
-        color: #4a4a4a;
-        background-color: $body-bg;
-      }
-      &-confirm-button {
-        color: $color-white;
-      }
+    &-cancel-button,
+    &-confirm-button {
+      width: 150px;
+      height: 54px;
+      border-radius: 45px;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+    &-cancel-button {
+      color: #4a4a4a;
+      background-color: $body-bg;
+    }
+    &-confirm-button {
+      color: $color-white;
     }
   }
 }

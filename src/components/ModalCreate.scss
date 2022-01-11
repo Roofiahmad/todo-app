@@ -1,85 +1,80 @@
 @import "../styles/variables.scss";
 
+.bg-modal {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .modal {
-  width: 100%;
+  position: absolute;
+  z-index: 100;
+  top: 0;
   margin: 0;
   padding: 0;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  @media screen and (max-width: 520px) {
-    width: 100%;
-    padding: 0;
-  }
-
-  .modal-add {
-    width: 100%;
-  }
-
-  .modal-dialog {
+  .modal-content {
     position: relative;
     margin: 0px;
     padding: 0px;
-    width: 57vw;
+    width: 50vw;
+    border-radius: 12px;
+    padding: 1rem;
 
-    .modal-content {
-      border-radius: 12px;
+    .modal-add-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1, 6875rem;
+      color: $color-black;
+    }
 
-      .modal-add-title {
-        font-size: 1.125rem;
-        font-weight: 600;
-        line-height: 1, 6875rem;
-        color: $color-black;
+    .modal-add-name-title,
+    .modal-add-priority-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: $color-black;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .modal-add-name-input {
+      width: 91%;
+      height: 52px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      font-weight: 400;
+      border: 1px solid $color-black-2;
+      background-color: $color-white;
+
+      &::placeholder {
+        color: $color-placeholder;
       }
 
-      .modal-add-name-title,
-      .modal-add-priority-title {
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: $color-black;
-        text-transform: uppercase;
-        margin-bottom: 10px;
+      &:focus-visible {
+        border: 1px solid $color-primary;
+        box-shadow: none;
       }
+    }
 
-      .modal-add-name-input {
-        width: 91%;
-        height: 52px;
-        margin-bottom: 15px;
+    .modal-add-priority-dropdown {
+      width: 205px;
+
+      @media screen and (max-width: 520px) {
+        width: 100%;
         font-size: 1rem;
-        line-height: 1.5rem;
-        font-weight: 400;
-        border: 1px solid $color-black-2;
-        background-color: $color-white;
-
-        &::placeholder {
-          color: $color-placeholder;
-        }
-
-        &:focus-visible {
-          border: 1px solid $color-primary;
-          box-shadow: none;
-        }
       }
+    }
 
-      .modal-add-priority-dropdown {
-        width: 205px;
-
-        @media screen and (max-width: 520px) {
-          width: 100%;
-          font-size: 1rem;
-        }
-      }
-
-      .modal-add-save-button {
-        width: 150px;
-        height: 54px;
-        font-size: 1.125rem;
-        font-weight: 600;
-        line-height: 1.5rem;
-        color: $color-white;
-        border-radius: 45px;
-      }
+    .modal-add-save-button {
+      width: 150px;
+      height: 54px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.5rem;
+      color: $color-white;
+      border-radius: 45px;
     }
   }
 }
