@@ -13,7 +13,7 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState({});
   const [isLoading, setIsloading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
+  // const [isDisabled, setIsDisabled] = useState(true);
 
   const options = [
     { value: "very-high", label: "Very High", color: "#ED4C5C" },
@@ -93,15 +93,15 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
       });
   };
 
-  useEffect(() => {
-    if (title.trim() !== "") {
-      if (isDisabled) {
-        setIsDisabled(false);
-      }
-    } else {
-      setIsDisabled(true);
-    }
-  }, [title]);
+  // useEffect(() => {
+  //   if (title.trim() !== "") {
+  //     if (isDisabled) {
+  //       setIsDisabled(false);
+  //     }
+  //   } else {
+  //     setIsDisabled(true);
+  //   }
+  // }, [title]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
@@ -146,7 +146,7 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
       <Modal.Footer>
         <Button
           onClick={() => onSaveData()}
-          disabled={isDisabled}
+          disabled={!title}
           className="modal-add-save-button"
           data-cy="modal-add-save-button"
           variant="primary"
