@@ -38,7 +38,7 @@ const options = [
   { value: "very-low", label: "Very Low", color: "#8942C1" },
 ];
 
-export default function ModalCreateList({ item, isModalEditShow, handleModalEditClose }) {
+export default function ModalCreateList({ item, isModalEditShow, handleModalEditClose, getActivityDetail }) {
   const { id: activityId } = useParams();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState({});
@@ -81,6 +81,7 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
       .then((response) => response.json())
       .then((data) => {
         handleClearValue();
+        getActivityDetail();
         setTimeout(() => {
           setIsloading(false);
         }, 300);

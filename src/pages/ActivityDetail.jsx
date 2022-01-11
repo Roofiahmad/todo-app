@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, lazy } from "react";
 import { Link, useParams } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
 
 import { ReactComponent as AddIcon } from "../assets/add.svg";
 import { ReactComponent as BackIcon } from "../assets/chevron-left.svg";
@@ -68,7 +67,6 @@ export default function ActivityDetail() {
   };
 
   const handleModalCreateClose = () => {
-    getActivityDetail();
     setModalCreateShow(false);
   };
 
@@ -81,7 +79,6 @@ export default function ActivityDetail() {
   };
 
   const handleModalEditClose = () => {
-    getActivityDetail();
     setModalEditShow(false);
   };
 
@@ -95,7 +92,6 @@ export default function ActivityDetail() {
   const handleModalDeleteClose = () => {
     setModalDeleteShow(false);
     setSelectedItem({});
-    getActivityDetail();
   };
 
   function onSubmitForm(e) {
@@ -188,6 +184,7 @@ export default function ActivityDetail() {
       .then((data) => {
         setActivity({ ...activity, title: data.title });
         setInputTitle(data.title);
+        getActivityDetail();
       })
       .catch((err) => console.log(err));
   };
@@ -344,8 +341,13 @@ export default function ActivityDetail() {
         </div>
       )}
 
-      <ModalCreateList isModalCreateShow={isModalCreateShow} handleModalCreateClose={handleModalCreateClose} />
-      <ModalEditList item={selectedItem} isModalEditShow={isModalEditShow} handleModalEditClose={handleModalEditClose} />
+      <ModalCreateList isModalCreateShow={isModalCreateShow} handleModalCreateClose={handleModalCreateClose} getActivityDetail={getActivityDetail} />
+      <ModalEditList
+        item={selectedItem}
+        isModalEditShow={isModalEditShow}
+        handleModalEditClose={handleModalEditClose}
+        getActivityDetail={getActivityDetail}
+      />
       <ModalDelete
         option="List Item"
         item={selectedItem}

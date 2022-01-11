@@ -8,7 +8,7 @@ import "./ModalCreate.scss";
 
 const url = "https://todo.api.devcode.gethired.id/todo-items";
 
-export default function ModalCreateList({ isModalCreateShow, handleModalCreateClose }) {
+export default function ModalCreateList({ isModalCreateShow, handleModalCreateClose, getActivityDetail }) {
   const { id: activityId } = useParams();
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState({});
@@ -81,6 +81,7 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
       .then((data) => {
         setTitle("");
         setPriority(options[0]);
+        getActivityDetail();
         setTimeout(() => {
           setIsloading(false);
           handleClearValue();
