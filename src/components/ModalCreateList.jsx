@@ -146,13 +146,14 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
           variant="primary"
           type="submit"
         >
-          {isLoading ? (
+          Simpan
+          {/* {isLoading ? (
             <div className="spinner-border text-light" role="status">
               <span className="visually-hidden"></span>
             </div>
           ) : (
             "Simpan"
-          )}
+          )} */}
         </Button>
       </Modal.Footer>
     </Modal>

@@ -108,16 +108,6 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
     console.log("edit disabled", !title, title);
   }, [title, priority, isLoading, isModalEditShow, item]);
 
-  // useEffect(() => {
-  //   if (title !== "" && title !== undefined) {
-  //     if (isDisabled) {
-  //       setIsDisabled(false);
-  //     }
-  //   } else {
-  //     setIsDisabled(true);
-  //   }
-  // }, [title]);
-
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
 
@@ -164,16 +154,18 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
           disabled={!title}
           className="modal-add-save-button"
           data-cy="modal-add-save-button"
+          dataCy="modal-add-save-button"
           variant="primary"
           type="submit"
         >
-          {isLoading ? (
+          Simpan
+          {/* {isLoading ? (
             <div className="spinner-border text-light" role="status">
               <span className="visually-hidden"></span>
             </div>
           ) : (
             "Simpan"
-          )}
+          )} */}
         </Button>
       </Modal.Footer>
     </Modal>
