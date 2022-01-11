@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import { ReactComponent as ExclamationIcon } from "../assets/exclamation.svg";
 
 import "./Alert.scss";

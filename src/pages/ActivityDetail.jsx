@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, lazy } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Dropdown } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
 
 import { ReactComponent as AddIcon } from "../assets/add.svg";
 import { ReactComponent as BackIcon } from "../assets/chevron-left.svg";
