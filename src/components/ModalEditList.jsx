@@ -43,7 +43,7 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState({});
   const [isLoading, setIsloading] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
+  // const [isDisabled, setIsDisabled] = useState(true);
 
   const handleClearValue = () => {
     setTitle("");
@@ -105,14 +105,18 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
   }, [item]);
 
   useEffect(() => {
-    if (title !== "" && title !== undefined) {
-      if (isDisabled) {
-        setIsDisabled(false);
-      }
-    } else {
-      setIsDisabled(true);
-    }
-  }, [title]);
+    console.log("edit disabled", !title, title);
+  }, [title, priority, isLoading, isModalEditShow, item]);
+
+  // useEffect(() => {
+  //   if (title !== "" && title !== undefined) {
+  //     if (isDisabled) {
+  //       setIsDisabled(false);
+  //     }
+  //   } else {
+  //     setIsDisabled(true);
+  //   }
+  // }, [title]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
@@ -157,7 +161,7 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
       <Modal.Footer>
         <Button
           onClick={() => onSaveData()}
-          disabled={isDisabled}
+          disabled={!title}
           className="modal-add-save-button"
           data-cy="modal-add-save-button"
           variant="primary"

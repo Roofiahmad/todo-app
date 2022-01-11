@@ -93,15 +93,9 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
       });
   };
 
-  // useEffect(() => {
-  //   if (title.trim() !== "") {
-  //     if (isDisabled) {
-  //       setIsDisabled(false);
-  //     }
-  //   } else {
-  //     setIsDisabled(true);
-  //   }
-  // }, [title]);
+  useEffect(() => {
+    console.log("create disabled", !title, title);
+  }, [title, priority, isLoading, isModalCreateShow]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
