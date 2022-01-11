@@ -93,6 +93,7 @@ export default function ActivityDetail() {
 
   const handleModalDeleteClose = () => {
     setModalDeleteShow(false);
+    setSelectedItem({});
     getActivityDetail();
   };
 
@@ -204,6 +205,7 @@ export default function ActivityDetail() {
       .then(() => {
         getActivityDetail();
         setLoadingDelete(false);
+        setModalDeleteShow(false);
         setShowAlert(true);
       })
       .catch((err) => {

@@ -21,7 +21,6 @@ export default function ModalDelete({
   const handleDeleteItem = () => {
     const execute = deleteOption[option];
     execute();
-    handleModalDeleteClose();
   };
 
   return (

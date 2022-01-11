@@ -105,7 +105,7 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
   }, [item]);
 
   useEffect(() => {
-    console.log("edit disabled", !title, title);
+    console.log("edit disabled", !title || !isModalEditShow, title);
   }, [title, priority, isLoading, isModalEditShow, item]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
@@ -151,10 +151,9 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
       <Modal.Footer>
         <Button
           onClick={() => onSaveData()}
-          disabled={!title}
+          disabled={!title || !isModalEditShow}
           className="modal-add-save-button"
           data-cy="modal-add-save-button"
-          dataCy="modal-add-save-button"
           variant="primary"
           type="submit"
         >
