@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select, { components } from "react-select";
 
@@ -150,23 +149,22 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button
+        <button
           onClick={() => onSaveData()}
           disabled={!title || !isModalEditShow}
-          className="modal-add-save-button"
+          className="modal-add-save-button btn btn-primary"
           data-cy="modal-add-save-button"
           variant="primary"
           type="submit"
         >
-          Simpan
-          {/* {isLoading ? (
+          {isLoading ? (
             <div className="spinner-border text-light" role="status">
               <span className="visually-hidden"></span>
             </div>
           ) : (
             "Simpan"
-          )} */}
-        </Button>
+          )}
+        </button>
       </Modal.Footer>
     </Modal>
   );

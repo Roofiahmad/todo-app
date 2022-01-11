@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ReactComponent as WarningIcon } from "../assets/warning.svg";
 
@@ -37,10 +36,10 @@ export default function ModalDelete({
           </Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <Button className="modal-delete-cancel-button" data-cy="modal-delete-cancel-button" variant="secondary" onClick={handleModalDeleteClose}>
+          <button className="modal-delete-cancel-button btn btn-secondary" data-cy="modal-delete-cancel-button" onClick={handleModalDeleteClose}>
             Batal
-          </Button>
-          <Button className="modal-delete-confirm-button" data-cy="modal-delete-confirm-button" variant="danger" onClick={handleDeleteItem}>
+          </button>
+          <button className="modal-delete-confirm-button btn btn-danger" data-cy="modal-delete-confirm-button" onClick={handleDeleteItem}>
             {loadingDelete ? (
               <div className="spinner-border text-light" role="status">
                 <span className="visually-hidden">Loading...</span>
@@ -48,7 +47,7 @@ export default function ModalDelete({
             ) : (
               "Hapus"
             )}
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </div>

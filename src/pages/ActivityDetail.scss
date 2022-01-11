@@ -37,7 +37,7 @@
       box-shadow: none;
 
       &-icon {
-        width: 15px;
+        width: 24px;
         height: auto;
       }
     }
@@ -91,12 +91,15 @@
   }
 
   .todo-sort-button {
+    margin-right: 10px;
     .arrow-sort {
       width: 1.5rem;
     }
   }
 
   .sort-parent {
+    position: absolute;
+    margin-top: 10px;
     padding: 0;
     .sort-selection {
       width: 235px;

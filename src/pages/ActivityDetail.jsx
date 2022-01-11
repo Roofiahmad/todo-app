@@ -50,6 +50,7 @@ export default function ActivityDetail() {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [inputTitle, setInputTitle] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [dropDownToggle, setDropDownToggle] = useState(true);
 
   const listFilter = [
     { icon: <NewestIcon />, text: "Terbaru", key: "newest" },
@@ -159,6 +160,7 @@ export default function ActivityDetail() {
       default:
         break;
     }
+    setDropDownToggle(true);
     setFilteredList(newFilteredList);
   };
 
@@ -266,19 +268,25 @@ export default function ActivityDetail() {
             <EditIcon className="todo-title-edit-button-icon" />
           </button>
         </div>
-        <div className="d-flex ">
-          <Dropdown className="me-3">
-            <Dropdown.Toggle className="todo-sort-button" variant="outline-secondary" id="dropdown-button" data-cy="todo-sort-button">
+        <div className="d-flex">
+          <div className="dropdown">
+            <button
+              onClick={() => setDropDownToggle(!dropDownToggle)}
+              className="btn btn-outline-secondary dropdown-toggle todo-sort-button"
+              type="button"
+              data-cy="todo-sort-button"
+            >
               <SortIcon className="arrow-sort" data-cy="arrow-sort" />
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="sort-parent shadow border rounded">
+            </button>
+            <ul hidden={dropDownToggle} className="sort-parent shadow border rounded">
               {listFilter.map((list, index) => {
                 return (
-                  <Dropdown.Item
+                  <li
                     onClick={() => handleSelectedFilter(list.key)}
                     key={index}
-                    className="sort-selection d-flex justify-content-start align-items-center"
+                    className="sort-selection d-flex justify-content-start align-items-center dropdown-item"
                     data-cy="sort-selection"
+                    role="button"
                   >
                     <span className="sort-selection-icon" data-cy="sort-selection-icon">
                       {list.icon}
@@ -293,11 +301,11 @@ export default function ActivityDetail() {
                     ) : (
                       ""
                     )}
-                  </Dropdown.Item>
+                  </li>
                 );
               })}
-            </Dropdown.Menu>
-          </Dropdown>
+            </ul>
+          </div>
           <button
             onClick={() => handleModalCreateShow()}
             className="todo-add-button btn btn-primary d-flex align-items-center justify-content-center"
