@@ -24,7 +24,7 @@
       margin: 0;
       border-radius: 0px;
       box-shadow: none;
-      font-size: 36px;
+      font-size: 2.25rem;
       font-weight: 700;
       text-align: left;
       &:focus {
@@ -32,7 +32,19 @@
         border-bottom: 1px solid $color-black;
       }
 
-      @media screen and (max-width: 370px) {
+      @media screen and (max-width: 950px) {
+        font-size: 2rem;
+      }
+
+      @media screen and (max-width: 870px) {
+        font-size: 1.5rem;
+      }
+
+      @media screen and (max-width: 760px) {
+        font-size: 1.3rem;
+      }
+
+      @media screen and (max-width: 640px) {
         font-size: 1rem;
       }
     }
@@ -44,6 +56,10 @@
       &-icon {
         width: 24px;
         height: auto;
+
+        @media screen and (max-width: 870px) {
+          width: 1.4rem;
+        }
 
         @media screen and (max-width: 370px) {
           width: 1rem;
