@@ -20,6 +20,11 @@
       border-radius: 12px;
       padding: 0.5rem 1.5rem;
 
+      @media screen and (max-width: 370px) {
+        width: 320px;
+        height: 384px;
+      }
+
       .modal-add-title {
         font-size: 1.125rem;
         font-weight: 600;
@@ -45,6 +50,11 @@
         font-weight: 400;
         border: 1px solid $color-black-2;
         background-color: $color-white;
+
+        @media screen and (max-width: 370px) {
+          width: 278px;
+          height: 52px;
+        }
 
         &::placeholder {
           color: $color-placeholder;
