@@ -64,6 +64,7 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
   };
 
   const postNewItem = () => {
+    if (!title.trim()) throw Error("field cant empty");
     setIsloading(true);
     fetch(url, {
       method: "POST",
@@ -97,64 +98,70 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
     console.log("create disabled", !title, title);
   }, [title, priority, isLoading, isModalCreateShow]);
 
+  useEffect(() => {
+    // onSaveData();
+  }, []);
+
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
 
   return (
-    <Modal show={isModalCreateShow} onHide={handleClearValue} data-cy="modal-add" dialogClassName="modal-add">
-      <Modal.Header>
-        <Modal.Title data-cy="modal-add-title" className="modal-add-title">
-          Tambah List Item
-        </Modal.Title>
-        <CloseIcon role="button" className="modal-add-close-button" onClick={handleClearValue} data-cy="modal-add-close-button" />
-      </Modal.Header>
-      <Modal.Body>
-        <label className="modal-add-name-title" data-cy="modal-add-name-title" htmlFor="listname">
-          Nama List Item
-        </label>
-        <input
-          onChange={handleTitleInput}
-          className="form-control modal-add-name-input"
-          placeholder="Tambahkan nama list item"
-          data-cy="modal-add-name-input"
-          id="listname"
-          type="text"
-          value={title}
-        />
-        <label className="modal-add-priority-title" data-cy="modal-add-priority-title" htmlFor="priority">
-          Priority
-        </label>
-        <Select
-          className="modal-add-priority-dropdown"
-          defaultValue={options[0]}
-          options={options}
-          styles={colourStyles}
-          onChange={handlePriorityInput}
-          components={{
-            IndicatorSeparator: () => null,
-            Option: addDataAcceptance(components.Option, "modal-add-priority-item"),
-            Control: addDataAcceptance(components.Control, "modal-add-priority-dropdown"),
-          }}
-        />
-      </Modal.Body>
-      <Modal.Footer>
-        <button
-          onClick={() => onSaveData()}
-          disabled={!title}
-          className="modal-add-save-button btn btn-primary"
-          data-cy="modal-add-save-button"
-          variant="primary"
-          type="submit"
-        >
-          {isLoading ? (
-            <div className="spinner-border text-light" role="status">
-              <span className="visually-hidden"></span>
-            </div>
-          ) : (
-            "Simpan"
-          )}
-        </button>
-      </Modal.Footer>
+    <Modal show={isModalCreateShow} onHide={handleClearValue} dialogClassName="modal-add">
+      <Modal.Dialog data-cy="modal-add">
+        <Modal.Header>
+          <Modal.Title data-cy="modal-add-title" className="modal-add-title">
+            Tambah List Item
+          </Modal.Title>
+          <CloseIcon role="button" className="modal-add-close-button" onClick={handleClearValue} data-cy="modal-add-close-button" />
+        </Modal.Header>
+        <Modal.Body>
+          <label className="modal-add-name-title" data-cy="modal-add-name-title" htmlFor="listname">
+            Nama List Item
+          </label>
+          <input
+            onChange={handleTitleInput}
+            className="form-control modal-add-name-input"
+            placeholder="Tambahkan nama list item"
+            data-cy="modal-add-name-input"
+            id="listname"
+            type="text"
+            value={title}
+          />
+          <label className="modal-add-priority-title" data-cy="modal-add-priority-title" htmlFor="priority">
+            Priority
+          </label>
+          <Select
+            className="modal-add-priority-dropdown"
+            defaultValue={options[0]}
+            options={options}
+            styles={colourStyles}
+            onChange={handlePriorityInput}
+            components={{
+              IndicatorSeparator: () => null,
+              Option: addDataAcceptance(components.Option, "modal-add-priority-item"),
+              Control: addDataAcceptance(components.Control, "modal-add-priority-dropdown"),
+            }}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            onClick={() => onSaveData()}
+            disabled={!title}
+            className="modal-add-save-button btn btn-primary"
+            data-cy="modal-add-save-button"
+            variant="primary"
+            type="submit"
+          >
+            {isLoading ? (
+              <div className="spinner-border text-light" role="status">
+                <span className="visually-hidden"></span>
+              </div>
+            ) : (
+              "Simpan"
+            )}
+          </button>
+        </Modal.Footer>
+      </Modal.Dialog>
     </Modal>
   );
 }

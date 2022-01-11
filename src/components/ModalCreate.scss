@@ -4,25 +4,27 @@
   width: 100%;
   margin: 0;
   padding: 0;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 
   @media screen and (max-width: 520px) {
     width: 100%;
     padding: 0;
   }
 
+  .modal-add {
+    width: 100%;
+  }
+
   .modal-dialog {
     position: relative;
     margin: 0px;
     padding: 0px;
+    width: 57vw;
 
     .modal-content {
-      position: absolute;
-      width: 57vw;
-      top: 50vh;
-      left: 50vw;
-      transform: translate(-50%, -50%);
       border-radius: 12px;
-      padding: 0.5rem 1.5rem;
 
       .modal-add-title {
         font-size: 1.125rem;
