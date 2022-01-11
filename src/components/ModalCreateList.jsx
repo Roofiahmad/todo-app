@@ -87,20 +87,14 @@ export default function ModalCreateList({ isModalCreateShow, handleModalCreateCl
         setTitle("");
         setPriority(options[0]);
         getActivityDetail();
-        setTimeout(() => {
-          setIsloading(false);
-          handleClearValue();
-        }, 300);
+        setIsloading(false);
+        handleClearValue();
       })
       .catch((err) => {
         setIsloading(false);
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    console.log("create disabled", !title, title);
-  }, [title, priority, isLoading, isModalCreateShow]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;

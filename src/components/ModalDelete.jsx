@@ -25,10 +25,6 @@ export default function ModalDelete({
     handleModalDeleteClose();
   };
 
-  useEffect(() => {
-    console.log(isModalDeleteShow);
-  }, [isModalDeleteShow]);
-
   const handleClickOutside = (event) => {
     if (!modalContent.current.contains(event.target)) handleModalDeleteClose();
   };

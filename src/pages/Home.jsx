@@ -30,8 +30,6 @@ export default function Home() {
 
   const handleDeleteActivity = (activityId) => {
     const filteredItem = listItem.filter((item) => item.id === activityId)[0];
-    console.log("deleted activity");
-
     setSelectedItem(filteredItem);
     setIsModalDeleteShow(true);
   };
@@ -52,9 +50,7 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         getListActivity();
-        setTimeout(() => {
-          setLoadingButton(false);
-        }, 300);
+        setLoadingButton(false);
       })
       .catch((err) => {
         setLoadingButton(false);

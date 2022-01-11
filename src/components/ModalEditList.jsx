@@ -87,9 +87,7 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
       .then((data) => {
         handleClearValue();
         getActivityDetail();
-        setTimeout(() => {
-          setIsloading(false);
-        }, 300);
+        setIsloading(false);
       })
       .catch((err) => {
         setIsloading(false);
@@ -109,10 +107,6 @@ export default function ModalCreateList({ item, isModalEditShow, handleModalEdit
       setPriority(oldItemPriority(item));
     }
   }, [item]);
-
-  useEffect(() => {
-    console.log("edit disabled", !title || !isModalEditShow, title);
-  }, [title, priority, isLoading, isModalEditShow, item]);
 
   const addDataAcceptance = (Component, dataAcceptance) => (props) =>
     <Component {...props} innerProps={Object.assign({}, props.innerProps, { "data-cy": dataAcceptance })} />;
