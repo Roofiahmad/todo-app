@@ -10,5 +10,6 @@ export default defineConfig({
   server: {
     port: 10000,
     host: true,
+    base: "/vite-todo",
   },
 });
