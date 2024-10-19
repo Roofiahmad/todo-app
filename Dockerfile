@@ -11,3 +11,4 @@ RUN npm install
 # run the build command which will build and export html files
 RUN npm run build
 CMD ["npm", "run", "start"]
+EXPOSE 10000
